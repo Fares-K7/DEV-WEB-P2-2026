@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CY-FAT - Notation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <!-- Profil à gauche -->
+        <div class="profile-section">
+            <button id="profile-btn" class="profile-btn">👤 Profil</button>
+            <div id="profile-dropdown" class="profile-dropdown">
+                <div id="user-info"></div>
+                <a href="connexion.html">Se déconnecter</a>
+            </div>
+        </div>
+        
+        <!-- Logo au milieu gauche -->
+        <div class="logo">
+            <span class="logo-text">CY-FAT</span>
+            <span class="logo-burger">
+                <span class="bun bun-top"></span>
+                <span class="filling"></span>
+                <span class="bun bun-bottom"></span>
+            </span>
+        </div>
+        
+        <!-- Barre de recherche au milieu -->
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Rechercher un plat, menu...">
+            <button id="search-btn">🔍</button>
+        </div>
+    <nav class="menu">
+      <a href="index.html">Accueil</a>
+            <a href="connexion.html">Connexion</a>
+            <a href="carte.html">Carte</a>
+            <a href="livraison.html"</a>
+            <a href="apropos.html">A propos</a>
+            <a href="contact.html">Contact</a>
+            <a href="avis.html">Avis</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section section-alt">
+      <h2>Laisser un avis</h2>
+      <p class="section-intro">Merci ! Ton avis aide CY-FAT à s’améliorer (page de démo pour le projet).</p>
+
+      <div class="rating-layout">
+        <form class="rating-card" id="rating-form">
+          <label for="review-name">Nom (optionnel)</label>
+          <input id="review-name" type="text" placeholder="Ex : Lina B.">
+
+          <label>Note</label>
+          <div class="stars-input" id="stars-input" aria-label="Choisir une note">
+            <button type="button" class="star-btn" data-value="1">★</button>
+            <button type="button" class="star-btn" data-value="2">★</button>
+            <button type="button" class="star-btn" data-value="3">★</button>
+            <button type="button" class="star-btn" data-value="4">★</button>
+            <button type="button" class="star-btn" data-value="5">★</button>
+          </div>
+          <input type="hidden" id="review-rating" value="5">
+
+          <label for="review-text">Commentaire</label>
+          <textarea id="review-text" rows="4" placeholder="Dis ce que tu as aimé (ou pas)..." required></textarea>
+
+          <button type="submit" class="btn btn-primary">Publier l’avis</button>
+          <p class="login-note" id="rating-msg"></p>
+        </form>
+
+        <div class="rating-card">
+          <h3>Aperçu</h3>
+          <div class="review-preview" id="review-preview">
+            <div class="review-head">
+              <div class="review-name" id="prev-name">Client</div>
+              <div class="review-rating" id="prev-stars">★★★★★</div>
+            </div>
+            <div class="review-title">Nouveau avis</div>
+            <div class="review-text" id="prev-text">Ton commentaire s’affichera ici.</div>
+            <div class="review-date" id="prev-date"></div>
+          </div>
+
+          <button class="btn btn-secondary" id="back-home" type="button">Retour à l’accueil</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 CY-FAT - Site créé dans le cadre du projet Creative-Yumland.</p>
+  </footer>
+
+  <script>
+    // Star selector
+    const starButtons = Array.from(document.querySelectorAll('.star-btn'));
+    const ratingInput = document.getElementById('review-rating');
+    const textInput = document.getElementById('review-text');
+    const nameInput = document.getElementById('review-name');
+    const msg = document.getElementById('rating-msg');
+
+    const prevName = document.getElementById('prev-name');
+    const prevStars = document.getElementById('prev-stars');
+    const prevText = document.getElementById('prev-text');
+    const prevDate = document.getElementById('prev-date');
+
+    function stars(n) {
+      return "★★★★★☆☆☆☆☆".slice(5 - n, 10 - n);
+    }
+
+    function setRating(n) {
+      ratingInput.value = String(n);
+      starButtons.forEach(btn => {
+        const v = Number(btn.dataset.value);
+        btn.classList.toggle('star-btn-active', v <= n);
+      });
+      prevStars.textContent = stars(n);
+    }
+
+    function todayFR() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    starButtons.forEach(btn => {
+      btn.addEventListener('click', () => setRating(Number(btn.dataset.value)));
+    });
+
+    textInput.addEventListener('input', () => {
+      prevText.textContent = textInput.value || "Ton commentaire s’affichera ici.";
+    });
+
+    nameInput.addEventListener('input', () => {
+      prevName.textContent = nameInput.value.trim() || "Client";
+    });
+
+    prevDate.textContent = todayFR();
+    setRating(5);
+
+    // Submit -> stocke l'avis (démo)
+    document.getElementById('rating-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const review = {
+        name: (nameInput.value.trim() || "Client"),
+        rating: Number(ratingInput.value),
+        text: textInput.value.trim(),
+        date: todayFR()
+      };
+
+      const existing = JSON.parse(localStorage.getItem('cyfatReviews') || '[]');
+      existing.unshift(review);
+      localStorage.setItem('cyfatReviews', JSON.stringify(existing));
+
+      msg.textContent = "Avis enregistré ! (démo) Tu peux retourner à l’accueil.";
+      textInput.value = "";
+      prevText.textContent = "Ton commentaire s’affichera ici.";
+    });
+
+    document.getElementById('back-home').addEventListener('click', function() {
+      window.location.href = "index.html#avis";
+    });
+  </script>
+</body>
+</html>
+

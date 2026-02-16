@@ -8,6 +8,16 @@
 </head>
 <body>
     <header class="topbar">
+        <!-- Profil à gauche -->
+        <div class="profile-section">
+            <button id="profile-btn" class="profile-btn">👤 Profil</button>
+            <div id="profile-dropdown" class="profile-dropdown">
+                <div id="user-info"></div>
+                <a href="connexion.html">Se déconnecter</a>
+            </div>
+        </div>
+        
+        <!-- Logo au milieu gauche -->
         <div class="logo">
             <span class="logo-text">CY-FAT</span>
             <span class="logo-burger">
@@ -16,6 +26,12 @@
                 <span class="bun bun-bottom"></span>
             </span>
         </div>
+        
+        <!-- Barre de recherche au milieu -->
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Rechercher un plat, menu...">
+            <button id="search-btn">🔍</button>
+        </div>
         <nav class="menu">
             <a href="index.html">Accueil</a>
             <a href="connexion.html">Connexion</a>
@@ -23,6 +39,7 @@
             <a href="livraison.html">Livraison</a>
             <a href="apropos.html">A propos</a>
             <a href="contact.html">Contact</a>
+            <a href="avis.html">Avis</a>
         </nav>
     </header>
 

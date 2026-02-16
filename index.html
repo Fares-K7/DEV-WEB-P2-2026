@@ -9,14 +9,30 @@
 <body>
 
 <header class="topbar">
-    <div class="logo">
-        <span class="logo-text">CY-FAT</span>
-        <span class="logo-burger">
-            <span class="bun bun-top"></span>
-            <span class="filling"></span>
-            <span class="bun bun-bottom"></span>
-        </span>
-    </div>
+	<!-- Profil à gauche -->
+        <div class="profile-section">
+            <button id="profile-btn" class="profile-btn">👤 Profil</button>
+            <div id="profile-dropdown" class="profile-dropdown">
+                <div id="user-info"></div>
+                <a href="connexion.html">Se déconnecter</a>
+            </div>
+        </div>
+        
+        <!-- Logo au milieu gauche -->
+        <div class="logo">
+            <span class="logo-text">CY-FAT</span>
+            <span class="logo-burger">
+                <span class="bun bun-top"></span>
+                <span class="filling"></span>
+                <span class="bun bun-bottom"></span>
+            </span>
+        </div>
+        
+        <!-- Barre de recherche au milieu -->
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Rechercher un plat, menu...">
+            <button id="search-btn">🔍</button>
+        </div>
     <nav class="menu">
         <a href="index.html">Accueil</a>
         <a href="connexion.html">Connexion</a>
@@ -24,8 +40,11 @@
         <a href="livraison.html">Livraison</a>
         <a href="apropos.html">À propos</a>
         <a href="contact.html">Contact</a>
+        <a href="avis.html">Avis</a>
     </nav>
 </header>
+
+
 
 <main>
     <!-- ACCUEIL -->
@@ -40,6 +59,124 @@
         </div>
     </section>
 </main>
+<section class="section section-alt" id="avis">
+  <h2>Avis des clients</h2>
+
+  <div class="reviews-top">
+    <div class="reviews-score">
+      <span class="score" id="avg-score">4,7</span>
+      <span class="stars" aria-label="Note moyenne" id="avg-stars">★★★★★</span>
+      <span class="count" id="reviews-count">Basé sur 0 avis</span>
+    </div>
+
+  </div>
+
+  <div class="reviews-grid" id="reviews-grid">
+    <!-- Avis générés en JS -->
+  </div>
+</section>
+<script>
+  function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function pick(arr) {
+    return arr[randInt(0, arr.length - 1)];
+  }
+
+  function daysAgoToDateStr(daysAgo) {
+    const d = new Date();
+    d.setDate(d.getDate() - daysAgo);
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    return `${dd}/${mm}/${yyyy}`;
+  }
+
+  function stars(n) {
+    return "★★★★★☆☆☆☆☆".slice(5 - n, 10 - n);
+  }
+
+  function generateReviews(count) {
+    const firstNames = ["Inès","Yanis","Sofia","Nolan","Lina","Mehdi","Camille","Adam","Sarah","Ilyes","Zoé","Nora","Hugo","Amina"];
+    const lastInitial = ["B.","D.","K.","M.","R.","S.","T.","L.","P.","H."];
+
+    const titles = [
+      "Très bon et rapide",
+      "Parfait entre deux cours",
+      "Bon rapport qualité/prix",
+      "Je recommande",
+      "Une bonne surprise",
+      "Service top"
+    ];
+
+    const texts = [
+      "Portions généreuses et service rapide, idéal quand on est pressé.",
+      "Le burger est vraiment bon, et les frites maison font la diff.",
+      "J’ai pris un bowl, c’était frais et bien assaisonné.",
+      "Livraison arrivée chaude, emballage propre, rien à dire.",
+      "Prix corrects pour un resto étudiant, je reviendrai.",
+      "Accueil sympa, et le dessert du moment était excellent."
+    ];
+
+    const reviews = [];
+    for (let i = 0; i < count; i++) {
+      const rating = pick([5,5,5,4,4,4,4,3]); // biais vers le positif
+      reviews.push({
+        name: `${pick(firstNames)} ${pick(lastInitial)}`,
+        rating,
+        title: pick(titles),
+        text: pick(texts),
+        date: daysAgoToDateStr(randInt(1, 60))
+      });
+    }
+    return reviews;
+  }
+
+  function renderReviews() {
+    const grid = document.getElementById("reviews-grid");
+    const avgScoreEl = document.getElementById("avg-score");
+    const avgStarsEl = document.getElementById("avg-stars");
+    const countEl = document.getElementById("reviews-count");
+
+    const count = randInt(6, 10);
+    const reviews = generateReviews(count);
+
+    grid.innerHTML = "";
+    let sum = 0;
+
+    reviews.forEach(r => {
+      sum += r.rating;
+
+      const card = document.createElement("article");
+      card.className = "review-card";
+      card.innerHTML = `
+        <div class="review-head">
+          <div class="review-name">${r.name}</div>
+          <div class="review-rating" aria-label="Note">${stars(r.rating)}</div>
+        </div>
+        <div class="review-title">${r.title}</div>
+        <div class="review-text">${r.text}</div>
+        <div class="review-date">${r.date}</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    const avg = (sum / reviews.length);
+    const avgRounded = Math.round(avg * 10) / 10;
+
+    avgScoreEl.textContent = String(avgRounded).replace(".", ",");
+    avgStarsEl.textContent = stars(Math.round(avg));
+    countEl.textContent = `Basé sur ${reviews.length} avis`;
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("regen-reviews");
+    if (btn) btn.addEventListener("click", renderReviews);
+    renderReviews();
+  });
+</script>
+
 
 <footer class="footer">
     <p>© 2025 CY-FAT - Site créé dans le cadre du projet Creative-Yumland.</p>

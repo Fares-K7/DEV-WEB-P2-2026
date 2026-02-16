@@ -41,10 +41,11 @@
             <a href="livraison.html" class="active-link">Livraison</a>
             <a href="apropos.html">A propos</a>
             <a href="contact.html">Contact</a>
+            <a href="avis.html">Avis</a>
         </nav>
     </header>
 
-    <!-- Panneau admin (si connecté) - s'ajoute via JS -->
+
     
     <main>
         <section class="section section-alt">
@@ -73,16 +74,23 @@
                 <div class="livraison-card">
                     <h3>Commander</h3>
                     <p>Choisis depuis <a href="carte.html">Carte</a>, ajoute au panier, et valide ton adresse.</p>
-                    <button class="btn btn-primary" onclick="startOrder()">Démarrer commande</button>
+                    function startOrder() {
+  localStorage.setItem('orderMode', '1');
+  window.location.href = 'carte.html#commander';
+}
+
                 </div>
             </div>
             
             <div class="livraison-map">
-                <!-- Placeholder carte - remplace par Google Maps ou image -->
+
                 <img src="images/carte-livraison.jpg" alt="Zone livraison Cergy-Pontoise" style="width:100%; border-radius:16px;">
                 <p class="map-note">Zone couverte en bleu (exemple statique).</p>
             </div>
         </section>
+
+
+
     </main>
 
     <footer class="footer">
@@ -129,6 +137,8 @@
             alert('Panier phase 2 - Redirection vers carte.html');
             window.location.href = 'carte.html';
         }
+        
+
     </script>
 </body>
 </html>

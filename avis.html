@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CY-FAT - Avis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <span class="logo-text">CY-FAT</span>
+      <span class="logo-burger">
+        <span class="bun bun-top"></span>
+        <span class="filling"></span>
+        <span class="bun bun-bottom"></span>
+      </span>
+    </div>
+
+    <nav class="menu">
+      <a href="index.html">Accueil</a>
+        <a href="connexion.html">Connexion</a>
+        <a href="carte.html">Carte</a>
+        <a href="livraison.html">Livraison</a>
+        <a href="apropos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="avis.html" class="active-link">Avis</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section section-alt">
+      <h2>Donner votre avis</h2>
+      <p class="section-intro">Page dédiée aux avis (stockés localement pour le projet).</p>
+
+      <div class="rating-layout">
+        <form class="rating-card" id="review-form">
+          <label for="r-name">Nom (optionnel)</label>
+          <input id="r-name" type="text" placeholder="Ex : Lina B.">
+
+          <label>Note</label>
+          <div class="stars-input" id="stars-input" aria-label="Choisir une note">
+            <button type="button" class="star-btn" data-value="1">★</button>
+            <button type="button" class="star-btn" data-value="2">★</button>
+            <button type="button" class="star-btn" data-value="3">★</button>
+            <button type="button" class="star-btn" data-value="4">★</button>
+            <button type="button" class="star-btn" data-value="5">★</button>
+          </div>
+          <input type="hidden" id="r-rating" value="5">
+
+          <label for="r-text">Commentaire</label>
+          <textarea id="r-text" rows="4" placeholder="Ton avis..." required></textarea>
+
+          <button type="submit" class="btn btn-primary">Publier</button>
+          <button type="button" class="btn btn-secondary" id="clear-reviews">Vider (local)</button>
+
+          <p class="login-note" id="msg"></p>
+        </form>
+
+        <div class="rating-card">
+          <h3>Avis publiés</h3>
+          <div class="reviews-grid" id="reviews-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 CY-FAT - Site créé dans le cadre du projet Creative-Yumland.</p>
+  </footer>
+
+  <script>
+    const KEY = 'cyfatReviews';
+
+    function stars(n) {
+      return "★★★★★☆☆☆☆☆".slice(5 - n, 10 - n);
+    }
+
+    function todayFR() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function getReviews() {
+      return JSON.parse(localStorage.getItem(KEY) || '[]');
+    }
+
+    function setReviews(list) {
+      localStorage.setItem(KEY, JSON.stringify(list));
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function render() {
+      const container = document.getElementById('reviews-list');
+      const reviews = getReviews();
+
+      if (reviews.length === 0) {
+        container.innerHTML = '<p class="cart-empty">Aucun avis pour le moment.</p>';
+        return;
+      }
+
+      container.innerHTML = reviews.map(r => `
+        <article class="review-card">
+          <div class="review-head">
+            <div class="review-name">${escapeHtml(r.name || "Client")}</div>
+            <div class="review-rating" aria-label="Note">${stars(Number(r.rating || 5))}</div>
+          </div>
+          <div class="review-title">${escapeHtml(r.title || "Avis")}</div>
+          <div class="review-text">${escapeHtml(r.text || "")}</div>
+          <div class="review-date">${escapeHtml(r.date || "")}</div>
+        </article>
+      `).join('');
+    }
+
+    // Stars UI
+    const starButtons = Array.from(document.querySelectorAll('.star-btn'));
+    const ratingInput = document.getElementById('r-rating');
+    function setRating(n) {
+      ratingInput.value = String(n);
+      starButtons.forEach(btn => {
+        const v = Number(btn.dataset.value);
+        btn.classList.toggle('star-btn-active', v <= n);
+      });
+    }
+    starButtons.forEach(btn => btn.addEventListener('click', () => setRating(Number(btn.dataset.value))));
+    setRating(5);
+
+    // Submit
+    document.getElementById('review-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('r-name').value.trim();
+      const rating = Number(document.getElementById('r-rating').value);
+      const text = document.getElementById('r-text').value.trim();
+
+      const review = {
+        name: name || "Client",
+        rating,
+        title: "Avis",
+        text,
+        date: todayFR()
+      };
+
+      const reviews = getReviews();
+      reviews.unshift(review);
+      setReviews(reviews);
+
+      document.getElementById('msg').textContent = "Merci ! Ton avis a été enregistré (localStorage).";
+      document.getElementById('review-form').reset();
+      setRating(5);
+      render();
+    });
+
+    document.getElementById('clear-reviews').addEventListener('click', function() {
+      localStorage.removeItem(KEY);
+      document.getElementById('msg').textContent = "Avis supprimés (localStorage).";
+      render();
+    });
+
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
+</body>
+</html>
+
