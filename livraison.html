@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>CY-FAT - Livraison</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <!-- Profil à gauche -->
+        <div class="profile-section">
+            <button id="profile-btn" class="profile-btn">👤 Profil</button>
+            <div id="profile-dropdown" class="profile-dropdown">
+                <div id="user-info"></div>
+                <a href="connexion.html">Se déconnecter</a>
+            </div>
+        </div>
+        
+        <!-- Logo au milieu gauche -->
+        <div class="logo">
+            <span class="logo-text">CY-FAT</span>
+            <span class="logo-burger">
+                <span class="bun bun-top"></span>
+                <span class="filling"></span>
+                <span class="bun bun-bottom"></span>
+            </span>
+        </div>
+        
+        <!-- Barre de recherche au milieu -->
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Rechercher un plat, menu...">
+            <button id="search-btn">🔍</button>
+        </div>
+        
+        <!-- Nav à droite -->
+        <nav class="menu">
+            <a href="index.html">Accueil</a>
+            <a href="connexion.html">Connexion</a>
+            <a href="carte.html">Carte</a>
+            <a href="livraison.html" class="active-link">Livraison</a>
+            <a href="apropos.html">A propos</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Panneau admin (si connecté) - s'ajoute via JS -->
+    
+    <main>
+        <section class="section section-alt">
+            <h2>Livraison CY-FAT</h2>
+            <p class="section-intro">Livraison rapide sur Cergy-Pontoise et environs. Commandez en ligne, livré en 25-35 min !</p>
+            
+            <div class="livraison-grid">
+                <div class="livraison-card">
+                    <h3>Zone de livraison</h3>
+                    <ul>
+                        <li>✅ Cergy-Pontoise</li>
+                        <li>✅ Pontoise</li>
+                        <li>✅ Cergy-Préfecture</li>
+                        <li>✅ Université Cergy</li>
+                        <li>€2 frais (gratuit > €15)</li>
+                    </ul>
+                </div>
+                <div class="livraison-card">
+                    <h3>Horaires</h3>
+                    <ul>
+                        <li>11h30-14h00 (midi)</li>
+                        <li>18h30-22h00 (soir)</li>
+                        <li>Fermé dimanche</li>
+                    </ul>
+                </div>
+                <div class="livraison-card">
+                    <h3>Commander</h3>
+                    <p>Choisis depuis <a href="carte.html">Carte</a>, ajoute au panier, et valide ton adresse.</p>
+                    <button class="btn btn-primary" onclick="startOrder()">Démarrer commande</button>
+                </div>
+            </div>
+            
+            <div class="livraison-map">
+                <!-- Placeholder carte - remplace par Google Maps ou image -->
+                <img src="images/carte-livraison.jpg" alt="Zone livraison Cergy-Pontoise" style="width:100%; border-radius:16px;">
+                <p class="map-note">Zone couverte en bleu (exemple statique).</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 CY-FAT - Site créé dans le cadre du projet Creative-Yumland.</p>
+    </footer>
+
+    <script>
+        // Profil dropdown
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const userInfo = document.getElementById('user-info');
+
+        profileBtn.addEventListener('click', function() {
+            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Fermer dropdown en cliquant ailleurs
+        document.addEventListener('click', function(e) {
+            if (!profileBtn.contains(e.target)) {
+                profileDropdown.style.display = 'none';
+            }
+        });
+
+        // Charger infos profil
+        const userRole = localStorage.getItem('userRole');
+        if (userRole === 'admin') {
+            userInfo.innerHTML = '<strong>Admin</strong><br>admin.cyfat@gmail.com';
+            document.body.classList.add('admin-mode');
+        } else {
+            userInfo.innerHTML = 'Client invité<br>Connectez-vous';
+        }
+
+        // Recherche (placeholder)
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const query = document.getElementById('search-input').value;
+            if (query) {
+                alert(`Recherche "${query}" - Redirige vers carte.html#${query.toLowerCase()}`);
+                window.location.href = 'carte.html';
+            }
+        });
+
+        // Admin functions (globales)
+        function startOrder() {
+            alert('Panier phase 2 - Redirection vers carte.html');
+            window.location.href = 'carte.html';
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>CY-FAT - Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="logo">
+        <span class="logo-text">CY-FAT</span>
+        <span class="logo-burger">
+            <span class="bun bun-top"></span>
+            <span class="filling"></span>
+            <span class="bun bun-bottom"></span>
+        </span>
+    </div>
+    <nav class="menu">
+        <a href="index.html">Accueil</a>
+        <a href="connexion.html" class="active-link">Connexion</a>
+        <a href="carte.html">Carte</a>
+        <a href="livraison.html">Livraison</a>
+        <a href="apropos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <section class="section section-connexion">
+        <h2>Espace de connexion</h2>
+        <p class="section-intro">
+            Connectez-vous ou créez un compte pour accéder aux fonctionnalités adaptées à votre profil.
+        </p>
+
+        <div class="connexion-layout">
+
+            <div class="connexion-form-card">
+                <div class="login-tabs">
+                    <button class="tab-btn tab-btn-active">Connexion</button>
+                    <button class="tab-btn">Inscription</button>
+                </div>
+
+                <form class="login-form">
+                    <h3>Connexion</h3>
+                    <label for="login-email">Adresse email</label>
+                    <input type="email" id="login-email" name="login-email" placeholder="email@exemple.com">
+
+                    <label for="login-password">Mot de passe</label>
+                    <input type="password" id="login-password" name="login-password" placeholder="Votre mot de passe">
+
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </form>
+
+                <form class="signup-form">
+                    <h3>Inscription</h3>
+                    <label for="signup-name">Nom / Prénom</label>
+                    <input type="text" id="signup-name" name="signup-name" placeholder="Votre nom complet">
+
+                    <label for="signup-email">Adresse email</label>
+                    <input type="email" id="signup-email" name="signup-email" placeholder="email@exemple.com">
+
+                    <label for="signup-password">Mot de passe</label>
+                    <input type="password" id="signup-password" name="signup-password" placeholder="Choisissez un mot de passe">
+
+                    <button type="submit" class="btn btn-secondary">S'inscrire</button>
+                </form>
+
+                <p class="login-note">
+                    (Phase 1 : formulaires non fonctionnels, affichage statique Connexion / Inscription.)
+                </p>
+            </div>
+
+            <div class="connexion-roles-card">
+                <h3>Rôles et droits</h3>
+
+                <div class="role-block role-admin">
+                    <h4>Profil Administrateur</h4>
+                    <ul>
+                        <li>Modifier le contenu du site (menus, carte, horaires...).</li>
+                        <li>Consulter et gérer les messages envoyés via le formulaire de contact.</li>
+                        <li>Accéder à toutes les pages pour vérifier les éventuels problèmes.</li>
+                    </ul>
+                </div>
+
+                <div class="role-block role-client">
+                    <h4>Profil Client</h4>
+                    <ul>
+                        <li>Consulter la carte et les menus.</li>
+                        <li>Voir les informations de contact et les horaires.</li>
+                        <li>Envoyer un message ou une demande via le formulaire de contact.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>© 2025 CY-FAT - Site créé dans le cadre du projet Creative-Yumland.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginBtn = document.querySelector('.tab-btn:nth-child(1)');
+        const signupBtn = document.querySelector('.tab-btn:nth-child(2)');
+        const loginForm = document.querySelector('.login-form');
+        const signupForm = document.querySelector('.signup-form');
+        const loginSubmit = document.querySelector('.login-form button[type="submit"]');
+
+        // Gestion tabs (comme avant)
+        function showLogin() {
+            loginForm.style.display = 'flex';
+            signupForm.style.display = 'none';
+            loginBtn.classList.add('tab-btn-active');
+            signupBtn.classList.remove('tab-btn-active');
+        }
+
+        function showSignup() {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'flex';
+            signupBtn.classList.add('tab-btn-active');
+            loginBtn.classList.remove('tab-btn-active');
+        }
+
+        loginBtn.addEventListener('click', showLogin);
+        signupBtn.addEventListener('click', showSignup);
+
+        // Au chargement, connexion visible
+        showLogin();
+
+        // Gestion soumission connexion
+        loginSubmit.addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (email === 'admin.cyfat@gmail.com' && password === 'Admin2026') {
+                localStorage.setItem('userRole', 'admin');
+                alert('Connexion admin réussie ! Le site est maintenant en mode admin.');
+                applyAdminMode();
+            } else {
+                localStorage.setItem('userRole', 'client');
+                alert('Connexion client réussie !');
+                applyClientMode();
+            }
+            // Reset form
+            loginForm.reset();
+            showLogin();
+        });
+
+        // Fonction pour appliquer mode admin
+        function applyAdminMode() {
+            document.body.classList.add('admin-mode');
+            // Ajoute bouton admin visible partout
+            addAdminPanel();
+        }
+
+        // Fonction pour mode client
+        function applyClientMode() {
+            document.body.classList.remove('admin-mode');
+            const adminPanel = document.querySelector('.admin-panel');
+            if (adminPanel) adminPanel.remove();
+        }
+
+        // Ajoute panneau admin
+        function addAdminPanel() {
+            let adminPanel = document.querySelector('.admin-panel');
+            if (adminPanel) return;
+
+            adminPanel = document.createElement('div');
+            adminPanel.className = 'admin-panel';
+            adminPanel.innerHTML = `
+                <div class="admin-header">
+                    <span>Mode Admin Activé</span>
+                    <button id="logout-btn">Déconnexion</button>
+                </div>
+                <ul>
+                    <li><a href="#" onclick="editContent('menus')">✏️ Éditer Menus/Carte</a></li>
+                    <li><a href="#" onclick="manageMessages()">📧 Gérer Messages</a></li>
+                    <li><a href="#" onclick="previewSite()">👁️ Aperçu Client</a></li>
+                </ul>
+            `;
+            document.body.appendChild(adminPanel);
+
+            // Déconnexion
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('userRole');
+                applyClientMode();
+                alert('Déconnecté.');
+            });
+        }
+
+        // Vérifier role au chargement de n'importe quelle page
+        const userRole = localStorage.getItem('userRole');
+        if (userRole === 'admin') {
+            applyAdminMode();
+        }
+    });
+
+    // Fonctions globales pour admin (à appeler depuis liens)
+    function editContent(section) {
+        alert(`Édition ${section} - Phase 2 (à implémenter avec éditeur).`);
+    }
+
+    function manageMessages() {
+        alert('Gestion messages contact - Phase 2.');
+    }
+
+    function previewSite() {
+        document.body.classList.remove('admin-mode');
+        const adminPanel = document.querySelector('.admin-panel');
+        if (adminPanel) adminPanel.remove();
+    }
+</script>
+
+
+</body>
+</html>
+
