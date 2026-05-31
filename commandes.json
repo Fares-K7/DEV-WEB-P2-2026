@@ -1,0 +1,154 @@
+[
+    {
+        "id": 1,
+        "client_id": 3,
+        "articles": [
+            {
+                "type": "menu",
+                "id": 2,
+                "nom": "Menu Burger CY-FAT",
+                "quantite": 1,
+                "prix_unitaire": 13.9
+            },
+            {
+                "type": "plat",
+                "id": 16,
+                "nom": "Boisson fraîche",
+                "quantite": 2,
+                "prix_unitaire": 2
+            }
+        ],
+        "total": 17.9,
+        "mode": "livraison",
+        "adresse_livraison": "12 Rue des Étudiants, Cergy",
+        "code_interphone": "1234",
+        "statut": "livre",
+        "livreur_id": 9,
+        "date_commande": "2025-03-20 12:15:00",
+        "date_livraison_prevue": "2025-03-20 12:45:00",
+        "date_livraison_effective": "2025-03-20 12:40:00",
+        "paiement_statut": "paye",
+        "paiement_methode": "CYBank",
+        "transaction_id": "CYB-20250320-001",
+        "note_commande": null
+    },
+    {
+        "id": 2,
+        "client_id": 4,
+        "articles": [
+            {
+                "type": "menu",
+                "id": 1,
+                "nom": "Menu Midi Étudiant",
+                "quantite": 2,
+                "prix_unitaire": 9.5
+            }
+        ],
+        "total": 19,
+        "mode": "sur_place",
+        "adresse_livraison": null,
+        "statut": "livre",
+        "livreur_id": null,
+        "date_commande": "2025-03-22 12:05:00",
+        "date_livraison_prevue": null,
+        "paiement_statut": "paye",
+        "paiement_methode": "CYBank",
+        "transaction_id": "CYB-20250322-002",
+        "note_commande": null,
+        "date_livraison_effective": "2026-05-12 13:44:35"
+    },
+    {
+        "id": 3,
+        "client_id": 7,
+        "articles": [
+            {
+                "type": "plat",
+                "id": 5,
+                "nom": "CY-FAT Burger",
+                "quantite": 1,
+                "prix_unitaire": 9.9
+            },
+            {
+                "type": "plat",
+                "id": 13,
+                "nom": "Cheesecake maison",
+                "quantite": 1,
+                "prix_unitaire": 4.5
+            },
+            {
+                "type": "plat",
+                "id": 16,
+                "nom": "Boisson fraîche",
+                "quantite": 1,
+                "prix_unitaire": 2
+            }
+        ],
+        "total": 16.4,
+        "mode": "livraison",
+        "adresse_livraison": "3 Impasse du Moulin, Pontoise",
+        "code_interphone": "9999",
+        "statut": "en_livraison",
+        "livreur_id": 9,
+        "date_commande": "2025-03-22 19:30:00",
+        "date_livraison_prevue": "2025-03-22 20:05:00",
+        "paiement_statut": "paye",
+        "paiement_methode": "CYBank",
+        "transaction_id": "CYB-20250322-003",
+        "note_commande": null
+    },
+    {
+        "id": 4,
+        "client_id": 6,
+        "articles": [
+            {
+                "type": "menu",
+                "id": 3,
+                "nom": "Menu Bowl Salade",
+                "quantite": 1,
+                "prix_unitaire": 12.9
+            }
+        ],
+        "total": 12.9,
+        "mode": "a_emporter",
+        "adresse_livraison": null,
+        "statut": "livre",
+        "livreur_id": null,
+        "date_commande": "2025-03-22 13:00:00",
+        "date_livraison_prevue": "2025-03-22 14:30:00",
+        "paiement_statut": "en_attente",
+        "paiement_methode": null,
+        "transaction_id": null,
+        "note_commande": null,
+        "date_livraison_effective": "2026-05-12 13:44:34"
+    },
+    {
+        "id": 5,
+        "client_id": 3,
+        "articles": [
+            {
+                "type": "menu",
+                "id": 4,
+                "nom": "Menu Soirée",
+                "quantite": 3,
+                "prix_unitaire": 16.5
+            }
+        ],
+        "total": 49.5,
+        "mode": "livraison",
+        "adresse_livraison": "12 Rue des Étudiants, Cergy",
+        "code_interphone": "1234",
+        "statut": "livre",
+        "livreur_id": 9,
+        "date_commande": "2025-03-18 19:00:00",
+        "date_livraison_prevue": "2025-03-18 19:35:00",
+        "date_livraison_effective": "2025-03-18 19:40:00",
+        "paiement_statut": "paye",
+        "paiement_methode": "CYBank",
+        "transaction_id": "CYB-20250318-005",
+        "note_commande": {
+            "note": 5,
+            "commentaire": "Super repas, livraison rapide !",
+            "date": "2025-03-18"
+        }
+    }
+]

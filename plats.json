@@ -1,0 +1,200 @@
+[
+  {
+    "id": 1,
+    "nom": "Soupe du jour",
+    "description": "Soupe maison préparée selon les arrivages du marché.",
+    "prix": 3.50,
+    "categorie": "entree",
+    "allergenes": ["gluten"],
+    "infos_nutritionnelles": {"calories": 120, "proteines": 4, "glucides": 15, "lipides": 3},
+    "disponible": true,
+    "image": "soupe.jpg"
+  },
+  {
+    "id": 2,
+    "nom": "Salade CY-Classic",
+    "description": "Salade verte, tomates cerises, concombre, croûtons et vinaigrette maison.",
+    "prix": 4.90,
+    "categorie": "entree",
+    "allergenes": ["gluten"],
+    "infos_nutritionnelles": {"calories": 180, "proteines": 5, "glucides": 20, "lipides": 8},
+    "disponible": true,
+    "image": "salade_classic.jpg"
+  },
+  {
+    "id": 3,
+    "nom": "Nachos à partager",
+    "description": "Chips de maïs, guacamole, salsa, crème fraîche et jalapeños.",
+    "prix": 6.90,
+    "categorie": "entree",
+    "allergenes": ["gluten", "lait"],
+    "infos_nutritionnelles": {"calories": 450, "proteines": 8, "glucides": 55, "lipides": 22},
+    "disponible": true,
+    "image": "nachos.jpg"
+  },
+  {
+    "id": 4,
+    "nom": "Velouté de potiron",
+    "description": "Velouté de potiron au lait de coco et gingembre.",
+    "prix": 4.20,
+    "categorie": "entree",
+    "allergenes": [],
+    "infos_nutritionnelles": {"calories": 150, "proteines": 3, "glucides": 18, "lipides": 7},
+    "disponible": true,
+    "image": "veloute.jpg"
+  },
+  {
+    "id": 5,
+    "nom": "CY-FAT Burger",
+    "description": "Steak haché maison 180g, cheddar fondu, salade, tomate, oignons, sauce secrète CY-FAT.",
+    "prix": 9.90,
+    "categorie": "burger",
+    "allergenes": ["gluten", "lait", "oeufs"],
+    "infos_nutritionnelles": {"calories": 720, "proteines": 42, "glucides": 58, "lipides": 32},
+    "disponible": true,
+    "image": "cyfat_burger.jpg"
+  },
+  {
+    "id": 6,
+    "nom": "Chicken Crunch Burger",
+    "description": "Poulet croustillant mariné, coleslaw maison, pickles, sauce ranch.",
+    "prix": 10.50,
+    "categorie": "burger",
+    "allergenes": ["gluten", "lait", "oeufs", "moutarde"],
+    "infos_nutritionnelles": {"calories": 680, "proteines": 38, "glucides": 62, "lipides": 28},
+    "disponible": true,
+    "image": "chicken_burger.jpg"
+  },
+  {
+    "id": 7,
+    "nom": "Veggie Green Burger",
+    "description": "Steak de légumes maison, avocat, roquette, tomate séchée, sauce yaourt-herbes.",
+    "prix": 9.50,
+    "categorie": "burger",
+    "allergenes": ["gluten", "lait"],
+    "infos_nutritionnelles": {"calories": 540, "proteines": 18, "glucides": 62, "lipides": 20},
+    "disponible": true,
+    "image": "veggie_burger.jpg"
+  },
+  {
+    "id": 8,
+    "nom": "Pâtes du moment",
+    "description": "Pâtes fraîches au choix du chef : carbonara, arrabiata ou pesto.",
+    "prix": 8.90,
+    "categorie": "plat",
+    "allergenes": ["gluten", "oeufs", "lait"],
+    "infos_nutritionnelles": {"calories": 620, "proteines": 22, "glucides": 78, "lipides": 24},
+    "disponible": true,
+    "image": "pates.jpg"
+  },
+  {
+    "id": 9,
+    "nom": "Poulet grillé & légumes",
+    "description": "Filet de poulet grillé, légumes de saison rôtis, sauce au citron.",
+    "prix": 11.50,
+    "categorie": "plat",
+    "allergenes": [],
+    "infos_nutritionnelles": {"calories": 480, "proteines": 45, "glucides": 25, "lipides": 18},
+    "disponible": true,
+    "image": "poulet.jpg"
+  },
+  {
+    "id": 10,
+    "nom": "Power Bowl",
+    "description": "Riz, poulet teriyaki, edamame, carottes, avocat, graines de sésame, sauce soja.",
+    "prix": 10.90,
+    "categorie": "bowl",
+    "allergenes": ["gluten", "soja"],
+    "infos_nutritionnelles": {"calories": 580, "proteines": 36, "glucides": 68, "lipides": 16},
+    "disponible": true,
+    "image": "power_bowl.jpg"
+  },
+  {
+    "id": 11,
+    "nom": "Salade César CY-FAT",
+    "description": "Romaine, poulet grillé, parmesan, croûtons maison, sauce César.",
+    "prix": 9.90,
+    "categorie": "bowl",
+    "allergenes": ["gluten", "lait", "oeufs", "poisson"],
+    "infos_nutritionnelles": {"calories": 520, "proteines": 32, "glucides": 30, "lipides": 28},
+    "disponible": true,
+    "image": "salade_cesar.jpg"
+  },
+  {
+    "id": 12,
+    "nom": "Salade veggie",
+    "description": "Quinoa, pois chiches, betterave, feta, noix, vinaigrette balsamique.",
+    "prix": 9.50,
+    "categorie": "bowl",
+    "allergenes": ["lait", "fruits_a_coque"],
+    "infos_nutritionnelles": {"calories": 420, "proteines": 15, "glucides": 52, "lipides": 18},
+    "disponible": true,
+    "image": "salade_veggie.jpg"
+  },
+  {
+    "id": 13,
+    "nom": "Cheesecake maison",
+    "description": "Cheesecake new-yorkais sur base biscuit, coulis de fruits rouges.",
+    "prix": 4.50,
+    "categorie": "dessert",
+    "allergenes": ["gluten", "lait", "oeufs"],
+    "infos_nutritionnelles": {"calories": 380, "proteines": 7, "glucides": 42, "lipides": 20},
+    "disponible": true,
+    "image": "cheesecake.jpg"
+  },
+  {
+    "id": 14,
+    "nom": "Mousse au chocolat",
+    "description": "Mousse au chocolat noir 70%, éclats de noisettes caramélisées.",
+    "prix": 3.90,
+    "categorie": "dessert",
+    "allergenes": ["lait", "oeufs", "fruits_a_coque"],
+    "infos_nutritionnelles": {"calories": 290, "proteines": 6, "glucides": 28, "lipides": 18},
+    "disponible": true,
+    "image": "mousse_choco.jpg"
+  },
+  {
+    "id": 15,
+    "nom": "Tiramisu du chef",
+    "description": "Tiramisu traditionnel, café fort, mascarpone, cacao.",
+    "prix": 4.20,
+    "categorie": "dessert",
+    "allergenes": ["gluten", "lait", "oeufs"],
+    "infos_nutritionnelles": {"calories": 340, "proteines": 8, "glucides": 36, "lipides": 18},
+    "disponible": true,
+    "image": "tiramisu.jpg"
+  },
+  {
+    "id": 16,
+    "nom": "Boisson fraîche",
+    "description": "Coca-Cola, Orangina, eau pétillante ou eau plate.",
+    "prix": 2.00,
+    "categorie": "boisson",
+    "allergenes": [],
+    "infos_nutritionnelles": {"calories": 90, "proteines": 0, "glucides": 22, "lipides": 0},
+    "disponible": true,
+    "image": "boisson.jpg"
+  },
+  {
+    "id": 17,
+    "nom": "Café / Thé",
+    "description": "Espresso, café allongé, thé Earl Grey ou menthe.",
+    "prix": 2.00,
+    "categorie": "boisson",
+    "allergenes": [],
+    "infos_nutritionnelles": {"calories": 5, "proteines": 0, "glucides": 1, "lipides": 0},
+    "disponible": true,
+    "image": "cafe.jpg"
+  },
+  {
+    "id": 18,
+    "nom": "Jus pressé",
+    "description": "Jus d'orange ou pomme pressés à la commande.",
+    "prix": 3.50,
+    "categorie": "boisson",
+    "allergenes": [],
+    "infos_nutritionnelles": {"calories": 110, "proteines": 1, "glucides": 26, "lipides": 0},
+    "disponible": true,
+    "image": "jus.jpg"
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "nom": "Menu Midi Étudiant",
+    "description": "Formule rapide entre deux cours : entrée ou plat + dessert + boisson.",
+    "prix_total": 9.50,
+    "plats_ids": [1, 2, 8, 9, 13, 14, 15, 16],
+    "categories_incluses": ["entree_ou_plat", "dessert", "boisson"],
+    "nb_personnes_min": 1,
+    "creneau": "midi",
+    "horaires": "11h30 - 14h00",
+    "disponible": true,
+    "image": "menu_midi.jpg"
+  },
+  {
+    "id": 2,
+    "nom": "Menu Burger CY-FAT",
+    "description": "Burger au choix, frites maison ou potatoes, boisson fraîche.",
+    "prix_total": 13.90,
+    "plats_ids": [5, 6, 7, 16],
+    "categories_incluses": ["burger", "accompagnement", "boisson"],
+    "nb_personnes_min": 1,
+    "creneau": "toute_la_journee",
+    "horaires": "11h30 - 22h00",
+    "disponible": true,
+    "image": "menu_burger.jpg"
+  },
+  {
+    "id": 3,
+    "nom": "Menu Bowl Salade",
+    "description": "Bowl protéiné ou salade composée, accompagnement, eau aromatisée ou jus.",
+    "prix_total": 12.90,
+    "plats_ids": [10, 11, 12, 16, 17, 18],
+    "categories_incluses": ["bowl", "boisson"],
+    "nb_personnes_min": 1,
+    "creneau": "toute_la_journee",
+    "horaires": "11h30 - 22h00",
+    "disponible": true,
+    "image": "menu_bowl.jpg"
+  },
+  {
+    "id": 4,
+    "nom": "Menu Soirée",
+    "description": "Plat au choix (pâtes, burger ou bowl), dessert à partager, boisson.",
+    "prix_total": 16.50,
+    "plats_ids": [5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17],
+    "categories_incluses": ["plat_ou_burger", "dessert", "boisson"],
+    "nb_personnes_min": 1,
+    "creneau": "soir",
+    "horaires": "18h30 - 22h00",
+    "disponible": true,
+    "image": "menu_soiree.jpg"
+  }
+]
