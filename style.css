@@ -1,13 +1,10 @@
-/* =========================
-   Charte graphique CY-FAT
-   ========================= */
+
 
 :root {
-    /* Couleurs chaudes mais douces (peu d'orange vif) */
-    --color-primary: #c75b39;   /* brun orangé doux */
-    --color-secondary: #d9a25f; /* doré léger */
-    --color-accent: #6f4f37;    /* brun chocolat */
-    --color-bg: #f7efe6;        /* beige rosé */
+    --color-primary: #c75b39;   
+    --color-secondary: #d9a25f; 
+    --color-accent: #6f4f37;    
+    --color-bg: #f7efe6;        
     --color-surface: #ffffff;
     --color-dark: #1f1712;
     --color-muted: #726a65;
@@ -17,7 +14,6 @@
     --font-main: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Reset simple */
 
 * {
     box-sizing: border-box;
@@ -37,16 +33,14 @@ body {
     line-height: 1.6;
 }
 
-/* ==========================================
-   HEADER + NAVIGATION DESIGN (style.css)
-   ========================================== */
+
 
 .topbar {
     position: sticky;
     top: 0;
     z-index: 100;
     display: flex;
-    flex-direction: column; /* Aligne verticalement la marque/recherche et les liens */
+    flex-direction: column; 
     gap: 16px;
     padding: 15px 40px;
     background-color: var(--color-surface);
@@ -54,7 +48,6 @@ body {
     border-bottom: 1px solid rgba(199, 91, 57, 0.08);
 }
 
-/* Première ligne : Profil, Titre/Logo et Barre de Recherche */
 .topbar-main {
     display: flex;
     justify-content: space-between;
@@ -63,7 +56,6 @@ body {
     gap: 20px;
 }
 
-/* Conteneur de recherche (pour éviter qu'il s'écrase) */
 .topbar .search-container {
     display: flex;
     align-items: center;
@@ -99,27 +91,24 @@ body {
     background: var(--color-accent);
 }
 
-/* Deuxième ligne : Menu de Navigation */
 .topbar nav {
     width: 100%;
     display: flex;
-    justify-content: center; /* Centre les liens horizontalement */
+    justify-content: center; 
     border-top: 1px solid rgba(114, 106, 101, 0.08);
     padding-top: 10px;
 }
 
-/* Liste des liens */
 .topbar nav ul {
     display: flex;
     list-style: none;
     gap: 10px;
     margin: 0;
     padding: 0;
-    flex-wrap: wrap; /* Évite les débordements si trop de liens */
+    flex-wrap: wrap; 
     justify-content: center;
 }
 
-/* Liens du menu */
 .topbar nav ul li a {
     text-decoration: none;
     color: var(--color-muted);
@@ -132,20 +121,17 @@ body {
     align-items: center;
 }
 
-/* Effet Hover */
 .topbar nav ul li a:hover {
     color: var(--color-primary);
     background-color: rgba(199, 91, 57, 0.05);
 }
 
-/* Onglet Actif */
 .topbar nav ul li a.active {
     color: var(--color-primary);
     font-weight: 600;
     background-color: rgba(199, 91, 57, 0.08);
 }
 
-/* Section Profil (Bouton thème + profil) */
 .profile-section {
     display: flex;
     align-items: center;
@@ -169,7 +155,6 @@ body {
     color: var(--color-primary);
 }
 
-/* Responsive SmartPhones */
 @media (max-width: 768px) {
     .topbar {
         padding: 15px 16px;
@@ -183,10 +168,10 @@ body {
     }
 }
 
-/* Intégration du menu de navigation dans la topbar */
+
 .nav-menu {
     display: flex;
-    gap: 15px; /* Espace de 15px entre chaque bouton */
+    gap: 15px;
 }
 
 .nav-btn {
@@ -198,13 +183,11 @@ body {
     transition: background 0.2s, color 0.2s;
 }
 
-/* Effet au survol et lien de la page active */
 .nav-btn:hover, .nav-btn.active {
-    background-color: rgba(199, 91, 57, 0.1); /* Léger fond couleur primaire */
+    background-color: rgba(199, 91, 57, 0.1); 
     color: var(--color-primary);
 }
 
-/* Logo texte + burger */
 
 .logo {
     display: flex;
@@ -220,7 +203,6 @@ body {
     text-transform: uppercase;
 }
 
-/* Burger CSS */
 
 .logo-burger {
     position: relative;
@@ -258,7 +240,6 @@ body {
     top: 8px;
 }
 
-/* Menu */
 
 .menu {
     display: flex;
@@ -294,13 +275,10 @@ body {
     width: 100%;
 }
 
-/* =========================
-   HERO
-   ========================= */
+
 
 .hero {
-  /* Plein écran (la topbar est sticky) */
-  min-height: calc(100vh - 70px); /* ajuste 70px si besoin */
+  min-height: calc(100vh - 70px); 
   padding: 70px 20px 60px;
 
   display: flex;
@@ -308,7 +286,6 @@ body {
   justify-content: center;
   text-align: center;
 
-  /* Image de fond + voile sombre pour lire le texte */
   background:
     linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
     url("imageCY.jpg");
@@ -347,7 +324,6 @@ body {
     gap: 10px;
 }
 
-/* Boutons */
 
 .btn {
     display: inline-block;
@@ -382,9 +358,7 @@ body {
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* =========================
-   SECTIONS GÉNÉRALES
-   ========================= */
+
 
 .section {
     max-width: 1120px;
@@ -405,9 +379,7 @@ body {
     color: var(--color-muted);
 }
 
-/* =========================
-   MENUS (avec images)
-   ========================= */
+
 
 .menus-grid {
     display: grid;
@@ -452,9 +424,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* =========================
-   CARTE
-   ========================= */
+
 
 .section-alt {
     background: radial-gradient(circle at top left, #f2ddc8 0, #f7efe6 55%, #ffffff 100%);
@@ -482,7 +452,6 @@ body {
     font-size: 0.95rem;
 }
 
-/* Image de plat à droite */
 
 .carte-image img {
     width: 100%;
@@ -492,9 +461,7 @@ body {
     box-shadow: var(--shadow-soft);
 }
 
-/* =========================
-   À PROPOS
-   ========================= */
+
 
 .apropos-layout {
     display: grid;
@@ -508,9 +475,6 @@ body {
     color: var(--color-accent);
 }
 
-/* =========================
-   CONTACT
-   ========================= */
 
 .contact-grid {
     display: grid;
@@ -562,9 +526,7 @@ body {
     box-shadow: 0 0 0 2px rgba(199, 91, 57, 0.15);
 }
 
-/* =========================
-   FOOTER
-   ========================= */
+
 
 .footer {
     text-align: center;
@@ -573,9 +535,7 @@ body {
     color: var(--color-muted);
 }
 
-/* =========================
-   CONNEXION / ROLES
-   ========================= */
+
 
 .section-connexion {
     background: radial-gradient(circle at top, #f2ddc8 0, #f7efe6 45%, #ffffff 100%);
@@ -597,7 +557,6 @@ body {
     padding: 20px 18px 22px;
 }
 
-/* Formulaire de login */
 
 .connexion-form-card h3 {
     margin-bottom: 10px;
@@ -636,7 +595,6 @@ body {
     color: var(--color-muted);
 }
 
-/* Rôles */
 
 .connexion-roles-card h3 {
     margin-bottom: 12px;
@@ -660,7 +618,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Couleurs différentes pour admin / client */
 
 .role-admin {
     background: rgba(199, 91, 57, 0.06);
@@ -679,9 +636,7 @@ body {
 .role-client h4 {
     color: #36693b;
 }
-/* =========================
-   CONNEXION / ROLES
-   ========================= */
+
 
 .section-connexion {
     background: radial-gradient(circle at top, #f2ddc8 0, #f7efe6 45%, #ffffff 100%);
@@ -703,7 +658,6 @@ body {
     padding: 20px 18px 22px;
 }
 
-/* Onglets Connexion / Inscription (pure mise en forme) */
 
 .login-tabs {
     display: inline-flex;
@@ -721,7 +675,7 @@ body {
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-muted);
-    cursor: default; /* pas de JS en phase 1 */
+    cursor: default; 
 }
 
 .tab-btn-active {
@@ -729,7 +683,6 @@ body {
     color: #ffffff;
 }
 
-/* Formulaires */
 
 .connexion-form-card h3 {
     margin-bottom: 6px;
@@ -773,7 +726,6 @@ body {
     color: var(--color-muted);
 }
 
-/* Rôles (inchangé) */
 
 .connexion-roles-card h3 {
     margin-bottom: 12px;
@@ -815,7 +767,6 @@ body {
     color: #36693b;
 }
 
-/* Responsive */
 
 @media (max-width: 900px) {
     .connexion-layout {
@@ -823,7 +774,6 @@ body {
     }
 }
 
-/* Responsive pour la section connexion */
 
 @media (max-width: 900px) {
     .connexion-layout {
@@ -831,9 +781,7 @@ body {
     }
 }
 
-/* =========================
-   RESPONSIVE
-   ========================= */
+
 
 @media (max-width: 900px) {
     .menus-grid {
@@ -886,14 +834,13 @@ body {
 .menu a.active-link::after {
     width: 100%;
 }
-/* Mode Admin */
 body.admin-mode {
     position: relative;
 }
 
 .admin-panel {
     position: fixed;
-    top: 80px; /* Sous topbar */
+    top: 80px; 
     right: 20px;
     width: 280px;
     background: linear-gradient(135deg, #f2ddc8, #f7efe6);
@@ -955,7 +902,6 @@ body.admin-mode {
     transform: translateX(4px);
 }
 
-/* Responsive admin panel */
 @media (max-width: 900px) {
     .admin-panel {
         right: 10px;
@@ -964,7 +910,6 @@ body.admin-mode {
         width: auto;
     }
 }
-/* Header amélioré pour livraison */
 .topbar {
     display: flex;
     align-items: center;
@@ -1045,7 +990,6 @@ body.admin-mode {
     cursor: pointer;
 }
 
-/* Livraison spécifique */
 .livraison-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1081,7 +1025,6 @@ body.admin-mode {
     margin-top: 8px;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
     .topbar {
         flex-direction: column;
@@ -1102,7 +1045,6 @@ body.admin-mode {
         justify-content: center;
     }
 }
-/* Prix dans la carte */
 .carte-col li {
   display: flex;
   align-items: baseline;
@@ -1115,7 +1057,6 @@ body.admin-mode {
   color: var(--color-primary);
   white-space: nowrap;
 }
-/* AVIS */
 .reviews-top {
   display: flex;
   align-items: center;
@@ -1199,11 +1140,9 @@ body.admin-mode {
   color: var(--color-muted);
 }
 
-/* Responsive */
 @media (max-width: 100%) {
   .reviews-grid { grid-template-columns: 1fr; }
 }
-/* NOTATION */
 .rating-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -1262,11 +1201,8 @@ body.admin-mode {
 
 
 
-/* ==========================================
-   PHASE 2 — CSS additionnel
-   ========================================== */
 
-/* Flash messages */
+
 .flash-success, .flash-error {
     max-width: 1120px;
     margin: 12px auto;
@@ -1278,7 +1214,6 @@ body.admin-mode {
 .flash-success { background: #e6f7ee; color: #2d7a4f; border-left: 4px solid #2d7a4f; }
 .flash-error   { background: #fdecea; color: #c03030; border-left: 4px solid #c03030; }
 
-/* Role badges */
 .role-badge {
     display: inline-block;
     padding: 2px 10px;
@@ -1293,7 +1228,6 @@ body.admin-mode {
 .role-restaurateur { background: #e8fde8; color: #2d7a4f; }
 .role-livreur      { background: #ede8fd; color: #6030c0; }
 
-/* Signup form */
 .signup-form {
     display: flex;
     flex-direction: column;
@@ -1311,7 +1245,6 @@ body.admin-mode {
 }
 .signup-form input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(199,91,57,.15); }
 
-/* Filtres carte */
 .filtres-bar {
     display: flex;
     flex-wrap: wrap;
@@ -1336,7 +1269,6 @@ body.admin-mode {
     color: #fff;
 }
 
-/* Grille plats */
 .plats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -1357,7 +1289,6 @@ body.admin-mode {
 .plat-desc  { font-size: .88rem; color: var(--color-muted); margin: 5px 0 6px; }
 .allergenes { font-size: .78rem; color: #c06010; margin-bottom: 4px; }
 
-/* Panier */
 .panier-layout {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
@@ -1440,7 +1371,6 @@ body.admin-mode {
 .cart-empty { text-align: center; color: var(--color-muted); padding: 30px 0; }
 .cart-empty a { color: var(--color-primary); }
 
-/* Suivi commande */
 .statut-timeline {
     display: flex;
     justify-content: center;
@@ -1516,7 +1446,6 @@ body.admin-mode {
     font-weight: 700;
 }
 
-/* Historique */
 .historique-list { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
 .histo-card {
     background: #fff;
@@ -1553,7 +1482,6 @@ body.admin-mode {
     border-top: 1px solid rgba(0,0,0,.05);
 }
 
-/* Profil */
 .profil-layout {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -1608,7 +1536,6 @@ body.admin-mode {
 .stat-val { display: block; font-weight: 800; font-size: 1.1rem; color: var(--color-primary); }
 .stat-lbl { font-size: .78rem; color: var(--color-muted); }
 
-/* Admin */
 .admin-filtres {
     display: flex;
     flex-wrap: wrap;
@@ -1658,7 +1585,6 @@ body.admin-mode {
 .admin-btn-danger  { border-color: #c03030; color: #c03030; }
 .admin-btn-success { border-color: #2d7a4f; color: #2d7a4f; }
 
-/* Restaurateur Kanban */
 .resto-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
@@ -1734,7 +1660,6 @@ body.admin-mode {
 }
 .kanban-btn:hover { filter: brightness(.92); }
 
-/* Livreur */
 .livraison-detail-card {
     background: #fff;
     border-radius: 16px;
