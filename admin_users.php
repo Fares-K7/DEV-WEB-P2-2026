@@ -1,19 +1,17 @@
 <?php
-// admin_users.php
 require_once 'includes/config.php';
 requireRole('admin', 'connexion.php');
 
 $users     = loadJSON(DATA_USERS);
 $commandes = loadJSON(DATA_COMMANDES);
 
-// Trier : admins en premier, puis par nom
 usort($users, function($a, $b) {
     if ($a['role'] === 'admin' && $b['role'] !== 'admin') return -1;
     if ($a['role'] !== 'admin' && $b['role'] === 'admin') return 1;
     return strcmp($a['nom'], $b['nom']);
 });
 
-// Filtres
+
 $filtre_role   = sanitize($_GET['role']   ?? 'tout');
 $filtre_statut = sanitize($_GET['statut'] ?? 'tout');
 $search        = sanitize($_GET['q']      ?? '');
@@ -35,7 +33,6 @@ include 'includes/header.php';
     <h2>👑 Administration — Utilisateurs</h2>
     <p class="section-intro"><?= count($users) ?> utilisateurs enregistrés.</p>
 
-    <!-- Filtres -->
     <form method="GET" class="admin-filtres">
         <input type="text" name="q" value="<?= h($search) ?>" placeholder="Rechercher un utilisateur...">
         <select name="role">
@@ -94,7 +91,6 @@ include 'includes/header.php';
         </div>
     </form>
 </div>
-    <!-- Tableau utilisateurs -->
     <div class="admin-table-wrap">
     <table class="admin-table">
         <thead>
@@ -134,7 +130,6 @@ include 'includes/header.php';
             <td><?= $u['date_inscription'] ?? '—' ?></td>
             <td>
                 <div class="admin-actions">
-                    <!-- Bloquer / Activer -->
                     <form action="actions/update_user.php" method="POST" style="display:inline;">
                         <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                         <?php if ($u['statut'] === 'actif'): ?>
@@ -146,7 +141,6 @@ include 'includes/header.php';
                         <?php endif; ?>
                     </form>
 
-                    <!-- Modifier niveau -->
                     <form action="actions/update_user.php" method="POST" style="display:inline;display:flex;gap:4px;align-items:center;">
                         <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                         <input type="hidden" name="action" value="set_niveau">
@@ -158,7 +152,6 @@ include 'includes/header.php';
                         <button type="submit" class="admin-btn" title="Changer niveau">✔</button>
                     </form>
 
-                    <!-- Remise -->
                     <form action="actions/update_user.php" method="POST" style="display:inline;display:flex;gap:4px;align-items:center;">
                         <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                         <input type="hidden" name="action" value="set_remise">
