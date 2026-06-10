@@ -1,5 +1,4 @@
 <?php
-// profil.php
 require_once 'includes/config.php';
 requireRole('client', 'connexion.php');
 
@@ -21,7 +20,6 @@ $total_depense = array_sum(array_column(array_values($mes_commandes), 'total'));
 
     <div class="profil-layout">
 
-        <!-- Infos personnelles -->
         <div class="profil-card">
     <div class="profil-card-header">
         <h3>Informations personnelles</h3>
@@ -73,7 +71,6 @@ $total_depense = array_sum(array_column(array_values($mes_commandes), 'total'));
     </form>
 </div>
 
-        <!-- Compte fidélité & stats -->
         <div class="profil-card">
             <h3>Compte fidélité</h3>
 
