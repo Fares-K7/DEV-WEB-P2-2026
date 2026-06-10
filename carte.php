@@ -5,9 +5,9 @@ require_once 'includes/config.php';
 $pageTitle  = 'CY-FAT — Carte';
 $activePage = 'carte.php';
 
-$plats  = loadJSON(DATA_PLATS);
-$menus  = loadJSON(DATA_MENUS);
-$user   = currentUser();
+$plats   = loadJSON(DATA_PLATS);
+$menus   = loadJSON(DATA_MENUS);
+$user    = currentUser();
 
 // Filtre catégorie
 $filtre    = sanitize($_GET['cat']    ?? 'tout');
@@ -38,7 +38,6 @@ include 'includes/header.php';
         <h2>Carte CY-FAT</h2>
         <p class="section-intro">Tous nos plats préparés avec soin. Commandez en ligne ou venez manger sur place !</p>
 
-        <!-- Filtres catégories -->
         <div class="filtres-bar">
             <?php foreach ($categories as $slug => $label): ?>
                 <a href="carte.php?cat=<?= h($slug) ?><?= $search ? '&search='.h($search) : '' ?>"
@@ -55,9 +54,12 @@ include 'includes/header.php';
             </p>
         <?php endif; ?>
 
-        <!-- Menus -->
         <?php if ($filtre === 'tout' && !$search): ?>
-        <h3 style="margin:30px 0 16px;color:var(--color-accent);">🍽️ Nos formules menus</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px;">
+            <h3 style="color:var(--color-accent); margin: 0;">🍽️ Nos formules menus</h3>
+            <a href="roulette.php" class="btn" style="background: var(--color-accent); color: #fff; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: bold; box-shadow: var(--shadow-soft);">🎰 Anti-Indécision</a>
+        </div>
+        
         <div class="menus-grid">
             <?php foreach ($menus as $menu): if (!$menu['disponible']) continue; ?>
                 <article class="menu-card">
@@ -66,13 +68,14 @@ include 'includes/header.php';
                         <p><?= h($menu['description']) ?></p>
                         <p style="color:var(--color-muted);font-size:.85rem;">🕐 <?= h($menu['horaires']) ?></p>
                         <p class="price" style="font-size:1.2rem;margin-top:8px;"><?= number_format($menu['prix_total'], 2, ',', '') ?> €</p>
+                        
                         <?php if ($user && $user['role'] === 'client'): ?>
                             <button class="btn btn-primary add-to-cart"
-                                    style="margin-top:10px;background:var(--color-primary);color:#fff;"
+                                    style="margin-top:10px;background:var(--color-primary);color:#fff;width:100%; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold;"
                                     data-id="<?= $menu['id'] ?>"
                                     data-type="menu"
                                     data-nom="<?= h($menu['nom']) ?>"
-                                    data-prix="<?= $menu['prix_total'] ?>">
+                                    data-prix="<?= floatval($menu['prix_total']) ?>">
                                 🛒 Ajouter au panier
                             </button>
                         <?php endif; ?>
@@ -82,7 +85,6 @@ include 'includes/header.php';
         </div>
         <?php endif; ?>
 
-        <!-- Plats -->
         <h3 style="margin:30px 0 16px;color:var(--color-accent);">
             <?= $filtre === 'tout' ? '🥗 Plats à la carte' : h($categories[$filtre] ?? '') ?>
         </h3>
@@ -134,7 +136,7 @@ include 'includes/header.php';
 <?php include 'includes/footer.php'; ?>
 
 <script>
-// Ajouter au panier (localStorage)
+// Logique globale d'ajout au panier (localStorage)
 document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', function() {
         const id    = parseInt(this.dataset.id);
@@ -154,7 +156,7 @@ document.querySelectorAll('.add-to-cart').forEach(btn => {
         localStorage.setItem('cyfatCart', JSON.stringify(cart));
         updateCartCount();
 
-        // Feedback visuel
+        // Feedback visuel à l'utilisateur
         this.textContent = '✅ Ajouté !';
         setTimeout(() => this.innerHTML = '🛒 Ajouter' + (type === 'menu' ? ' au panier' : ''), 1200);
     });
