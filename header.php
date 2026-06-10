@@ -1,23 +1,20 @@
 <?php
-// ========================================================
-// includes/header.php — Version Intégrale & Design Phase 3
-// ========================================================
+
 require_once 'includes/config.php';
 
 $user = currentUser();
 $role = $user['role'] ?? 'guest';
 
-// Gestion des liens de navigation par défaut
 $navLinks = [
     'index.php'     => 'Accueil',
     'carte.php'     => 'Carte',
+    'roulette.php'  => '🎰 Roulette',
     'livraison.php' => 'Livraison',
     'apropos.php'   => 'À propos',
     'contact.php'   => 'Contact',
     'avis.php'      => 'Avis',
 ];
 
-// Si l'utilisateur n'est pas connecté, on affiche l'onglet Connexion
 if (!$user) {
     $navLinks['connexion.php'] = 'Connexion';
 }
@@ -98,12 +95,10 @@ if (!$user) {
 <?php endif; ?>
 
 <script>
-    // 1. Initialisation et chargement immédiat du thème enregistré
     if (localStorage.getItem('cyfat-theme') === 'sombre') {
         document.body.classList.add('theme-sombre');
     }
 
-    // Gestion de l'interrupteur du Thème (Clair / Sombre)
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', function() {
@@ -116,7 +111,6 @@ if (!$user) {
         });
     }
 
-    // 2. Gestion de l'ouverture/fermeture du menu déroulant profil
     const profileBtn = document.getElementById('profile-btn');
     const profileDropdown = document.getElementById('profile-dropdown');
     
@@ -126,13 +120,11 @@ if (!$user) {
             profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
         });
         
-        // Ferme le menu de profil si l'on clique n'importe où ailleurs sur la page
         document.addEventListener('click', function() {
             profileDropdown.style.display = 'none';
         });
     }
 
-    // 3. Gestion de la soumission de la barre de recherche
     const searchBtn = document.getElementById('search-btn');
     const searchInput = document.getElementById('search-input');
     
@@ -142,7 +134,6 @@ if (!$user) {
             window.location.href = 'carte.php?search=' + encodeURIComponent(query);
         });
         
-        // Permet de lancer la recherche en appuyant sur la touche "Entrée"
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 searchBtn.click();
@@ -150,7 +141,6 @@ if (!$user) {
         });
     }
 
-    // 4. Calcul et rafraîchissement en arrière-plan de l'indicateur panier
     function updateCartCount() {
         const cart = JSON.parse(localStorage.getItem('cyfatCart') || '[]');
         const totalItems = cart.reduce((accumulateur, item) => accumulateur + item.quantite, 0);
@@ -161,3 +151,4 @@ if (!$user) {
     }
     document.addEventListener("DOMContentLoaded", updateCartCount);
 </script>
+
