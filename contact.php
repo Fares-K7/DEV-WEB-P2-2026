@@ -12,7 +12,7 @@ include 'includes/header.php';
             <div>
                 <h3>Nous trouver</h3>
                 <p>CY-FAT, Campus CY Cergy-Pontoise<br>95000 Cergy</p>
-                <p>Lundi – Vendredi<br>11h30 – 14h30 / 18h30 – 22h00</p>
+                <p>Lundi – Vendredi<br>11h30 – 14h30 / 18h30 – 23h00</p>
             </div>
             <div>
                 <h3>Nous écrire</h3>
@@ -40,3 +40,4 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     this.reset();
 });
 </script>
+
