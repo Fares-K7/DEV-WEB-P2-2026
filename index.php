@@ -1,5 +1,4 @@
 <?php
-// index.php
 require_once 'includes/config.php';
 
 $pageTitle  = 'CY-FAT — Accueil';
@@ -7,7 +6,6 @@ $activePage = 'index.php';
 $menus      = loadJSON(DATA_MENUS);
 $commandes  = loadJSON(DATA_COMMANDES);
 
-// Avis réels (commandes notées)
 $avis_reels = [];
 foreach ($commandes as $cmd) {
     if ($cmd['note_commande']) {
@@ -19,7 +17,6 @@ include 'includes/header.php';
 ?>
 
 <main>
-    <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
             <h1>Bienvenue chez CY-FAT</h1>
@@ -35,7 +32,6 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- Menus phares -->
     <section class="section" style="padding-top:50px;">
         <h2>Nos formules du moment</h2>
         <p class="section-intro">Des menus pensés pour les étudiants : rapide, bon et pas cher.</p>
@@ -57,7 +53,6 @@ include 'includes/header.php';
     </section>
 </main>
 
-<!-- SECTION AVIS -->
 <section class="section section-alt" id="avis">
     <h2>Avis des clients</h2>
 
@@ -75,7 +70,6 @@ include 'includes/header.php';
 <?php include 'includes/footer.php'; ?>
 
 <script>
-// Avis réels depuis PHP + avis générés
 const avisReels = <?= json_encode($avis_reels) ?>;
 
 function stars(n) {
