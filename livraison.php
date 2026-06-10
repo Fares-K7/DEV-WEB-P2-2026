@@ -1,5 +1,4 @@
 <?php
-// livraison.php
 require_once 'includes/config.php';
 $pageTitle  = 'CY-FAT — Livraison';
 $activePage = 'livraison.php';
