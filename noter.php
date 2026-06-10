@@ -1,5 +1,4 @@
 <?php
-// actions/noter.php — Soumettre une note de commande
 require_once '../includes/config.php';
 requireRole('client', '../connexion.php');
 
