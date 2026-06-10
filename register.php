@@ -1,5 +1,4 @@
 <?php
-// actions/register.php — Traitement inscription
 require_once '../includes/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -16,7 +15,6 @@ $password = $_POST['signup-password']         ?? '';
 $confirm  = $_POST['signup-confirm']          ?? '';
 $date_naissance = sanitize($_POST['signup-naissance'] ?? '');
 
-// Validations
 if (!$nom || !$prenom || !$email || !$password) {
     setFlash('error', 'Tous les champs obligatoires doivent être remplis.');
     header('Location: ../connexion.php');
@@ -49,7 +47,6 @@ if ($password !== $confirm) {
 
 $users = loadJSON(DATA_USERS);
 
-// Email déjà utilisé ?
 foreach ($users as $u) {
     if (strtolower($u['email']) === strtolower($email)) {
         setFlash('error', 'Cette adresse email est déjà utilisée.');
@@ -58,7 +55,6 @@ foreach ($users as $u) {
     }
 }
 
-// Créer le nouvel utilisateur
 $newUser = [
     'id'                => nextId($users),
     'nom'               => $nom,
@@ -71,7 +67,7 @@ $newUser = [
     'remise'            => 0,
     'telephone'         => $tel,
     'adresse'           => $adresse,
-    'date_naissance'    => $date_naissance, // <-- AJOUT ICI
+    'date_naissance'    => $date_naissance, 
     'date_inscription'  => date('Y-m-d'),
     'derniere_connexion'=> date('Y-m-d'),
     'points_fidelite'   => 0,
@@ -80,7 +76,6 @@ $newUser = [
 $users[] = $newUser;
 saveJSON(DATA_USERS, $users);
 
-// Connexion automatique
 $_SESSION['user_id'] = $newUser['id'];
 
 setFlash('success', 'Compte créé avec succès ! Bienvenue ' . $prenom . ' !');
