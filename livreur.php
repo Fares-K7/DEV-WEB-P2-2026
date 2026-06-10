@@ -1,5 +1,4 @@
 <?php
-// livreur.php — Optimisé smartphone, gros boutons, peu de données
 require_once 'includes/config.php';
 requireRole('livreur', 'connexion.php');
 
@@ -7,7 +6,6 @@ $user      = currentUser();
 $commandes = loadJSON(DATA_COMMANDES);
 $users     = loadJSON(DATA_USERS);
 
-// Mes livraisons en cours et historique
 $mes_livraisons = array_filter($commandes, fn($c) => $c['livreur_id'] === $user['id']);
 usort($mes_livraisons, fn($a,$b) => strtotime($b['date_commande']) - strtotime($a['date_commande']));
 
@@ -36,7 +34,6 @@ include 'includes/header.php';
     </div>
     <?php endif; ?>
 
-    <!-- Livraisons en cours -->
     <?php foreach ($en_cours as $cmd):
         $client = getUserById($users, $cmd['client_id']);
     ?>
@@ -46,7 +43,6 @@ include 'includes/header.php';
             <span class="statut-badge" style="background:#7050c020;color:#7050c0;border:1px solid #7050c040;">🛵 En livraison</span>
         </div>
 
-        <!-- Adresse bien visible -->
         <div class="livraison-adresse-block">
             <div class="livraison-adresse">📍 <?= h($cmd['adresse_livraison'] ?? 'Sur place') ?></div>
             <?php if ($cmd['code_interphone']): ?>
@@ -54,7 +50,6 @@ include 'includes/header.php';
             <?php endif; ?>
         </div>
 
-        <!-- Client -->
         <?php if ($client): ?>
         <div style="font-size:.9rem;color:var(--color-muted);margin:10px 0;">
             👤 <?= h($client['prenom'].' '.$client['nom']) ?>
@@ -64,7 +59,6 @@ include 'includes/header.php';
         </div>
         <?php endif; ?>
 
-        <!-- Articles -->
         <div style="background:rgba(0,0,0,.03);border-radius:10px;padding:10px 14px;margin:8px 0;">
             <?php foreach ($cmd['articles'] as $art): ?>
             <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:2px 0;">
@@ -78,14 +72,12 @@ include 'includes/header.php';
             </div>
         </div>
 
-        <!-- Heure prévue -->
         <?php if ($cmd['date_livraison_prevue']): ?>
         <p style="font-size:.85rem;color:var(--color-muted);">
             ⏰ Livraison prévue à <?= date('H:i', strtotime($cmd['date_livraison_prevue'])) ?>
         </p>
         <?php endif; ?>
 
-        <!-- Bouton Maps -->
         <?php if ($cmd['adresse_livraison']): ?>
         <a href="https://maps.google.com/?q=<?= urlencode($cmd['adresse_livraison']) ?>"
            target="_blank"
@@ -94,7 +86,6 @@ include 'includes/header.php';
         </a>
         <?php endif; ?>
 
-        <!-- Grands boutons d'action -->
         <div class="livraison-btns">
             <form action="actions/update_commande.php" method="POST" style="flex:1;">
                 <input type="hidden" name="commande_id" value="<?= $cmd['id'] ?>">
@@ -115,7 +106,6 @@ include 'includes/header.php';
     </div>
     <?php endforeach; ?>
 
-    <!-- Historique livraisons terminées -->
     <?php if (!empty($terminees)): ?>
     <h3 style="margin:30px 0 12px;color:var(--color-accent);">Livraisons terminées</h3>
     <?php foreach ($terminees as $cmd): ?>
@@ -143,6 +133,5 @@ include 'includes/header.php';
 
 <?php include 'includes/footer.php'; ?>
 <script>
-// Auto-refresh toutes les 20s
 setTimeout(() => location.reload(), 20000);
 </script>
