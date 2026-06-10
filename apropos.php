@@ -1,5 +1,4 @@
 <?php
-// apropos.php
 require_once 'includes/config.php';
 $pageTitle  = 'CY-FAT — À propos';
 $activePage = 'apropos.php';
