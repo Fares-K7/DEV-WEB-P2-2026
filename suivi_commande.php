@@ -1,5 +1,4 @@
 <?php
-// suivi_commande.php
 require_once 'includes/config.php';
 requireRole('client', 'connexion.php');
 
@@ -21,16 +20,13 @@ if (!$commande) {
     exit;
 }
 
-// 🌟 SÉCURITÉ ANTI-BUG 0€ : Si la commande est corrompue dans le JSON, on la répare en direct !
 $plats_backup = loadJSON(DATA_PLATS);
 $menus_backup = loadJSON(DATA_MENUS);
 $total_recalcule = 0;
 
 foreach ($commande['articles'] as $index => $art) {
-    // On essaie de lire toutes les clés de prix possibles ('prix_unitaire' ou 'prix')
     $prix = floatval($art['prix_unitaire'] ?? $art['prix'] ?? 0);
     
-    // Si le prix trouvé est égal à 0 ou null, on va chercher sa vraie valeur dans le catalogue d'origine
     if ($prix <= 0) {
         if (($art['type'] ?? '') === 'menu') {
             foreach ($menus_backup as $m) {
@@ -49,12 +45,10 @@ foreach ($commande['articles'] as $index => $art) {
         }
     }
     
-    // On réinjecte le prix propre corrigé pour l'affichage des lignes
     $commande['articles'][$index]['prix_unitaire_propre'] = $prix;
     $total_recalcule += $prix * intval($art['quantite']);
 }
 
-// Si le total global enregistré dans la commande était de 0, on le remplace par notre calcul sécurisé
 $total_final_commande = floatval($commande['total'] ?? 0);
 if ($total_final_commande <= 0) {
     $total_final_commande = $total_recalcule;
