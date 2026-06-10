@@ -1,5 +1,4 @@
 <?php
-// actions/commander.php — Valider le panier et créer la commande
 require_once '../includes/config.php';
 requireRole('client', '../connexion.php');
 
@@ -16,12 +15,10 @@ $adresse       = sanitize($_POST['adresse'] ?? $user['adresse'] ?? '');
 $interphone    = sanitize($_POST['interphone'] ?? $user['code_interphone'] ?? '');
 $date_souhait  = sanitize($_POST['date_souhait'] ?? '');
 
-// Paiement CYBank
 $card_num      = sanitize($_POST['card_number'] ?? '');
 $card_exp      = sanitize($_POST['card_exp']    ?? '');
 $card_cvv      = sanitize($_POST['card_cvv']    ?? '');
 
-// Décoder les articles
 $articles = json_decode($articles_raw, true);
 if (empty($articles)) {
     setFlash('error', 'Votre panier est vide.');
@@ -31,42 +28,38 @@ if (empty($articles)) {
 
 $total = 0;
 $plats = loadJSON(DATA_PLATS);
-$menus = loadJSON(DATA_MENUS); // On charge bien les menus depuis le JSON
+$menus = loadJSON(DATA_MENUS); 
 
 foreach ($articles as &$art) {
     if ($art['type'] === 'plat') {
         foreach ($plats as $p) {
             if ($p['id'] == $art['id']) {
-                $art['prix'] = $p['prix']; // On attache le prix unitaire
+                $art['prix'] = $p['prix']; 
                 $art['nom']  = $p['nom'];
                 $total      += $p['prix'] * $art['quantite'];
             }
         }
     } 
-    // === AJOUTEZ OU VÉRIFIEZ CE BLOC POUR LES MENUS ===
-    unset($m); // Sécurité PHP
+    unset($m); 
     if ($art['type'] === 'menu') {
         foreach ($menus as $m) {
             if ($m['id'] == $art['id']) {
-                $art['prix'] = $m['prix']; // On récupère les 10.00 € du menu
+                $art['prix'] = $m['prix']; 
                 $art['nom']  = $m['nom'];
-                $total      += $m['prix'] * $art['quantite']; // On l'ajoute au total
+                $total      += $m['prix'] * $art['quantite']; 
             }
         }
     }
 }
-unset($art); // Optionnel mais recommandé après une boucle par référence (&)
+unset($art); 
 
-// Appliquer remise fidélité
 $remise_pct = $user['remise'] ?? 0;
 $total_final = round($total * (1 - $remise_pct / 100), 2);
 
-// === Simulation API CYBank ===
 $paiement_statut = 'en_attente';
 $transaction_id  = null;
 
 if (!empty($card_num)) {
-    // Simulation : on accepte si numéro commence par 4 ou 5 (Visa/MC)
     $card_clean = preg_replace('/\s+/', '', $card_num);
     if (strlen($card_clean) === 16 && (str_starts_with($card_clean, '4') || str_starts_with($card_clean, '5'))) {
         $paiement_statut = 'paye';
@@ -78,7 +71,6 @@ if (!empty($card_num)) {
     }
 }
 
-// Créer la commande
 $commandes = loadJSON(DATA_COMMANDES);
 
 $date_prevue = null;
@@ -111,7 +103,6 @@ $nouvelle_commande = [
 $commandes[] = $nouvelle_commande;
 saveJSON(DATA_COMMANDES, $commandes);
 
-// Points fidélité +1 par euro dépensé
 $users = loadJSON(DATA_USERS);
 $users = array_map(function($u) use ($user, $total_final) {
     if ($u['id'] === $user['id']) {
