@@ -43,14 +43,6 @@ include 'includes/header.php';
 
                     <button type="submit" class="btn btn-primary" style="color:#fff;background:var(--color-primary);">Se connecter</button>
 
-                    <p class="login-note">
-                        <strong>Comptes démo :</strong><br>
-                        Admin : admin.cyfat@gmail.com / Admin2026<br>
-                        Admin2 : admin2@cyfat.fr / password<br>
-                        Client : client@gmail.com / password<br>
-                        Restaurateur : chef@cyfat.fr / password<br>
-                        Livreur : livreur@cyfat.fr / password
-                    </p>
                 </form>
 
                 <!-- Inscription -->
@@ -77,7 +69,7 @@ include 'includes/header.php';
                     <label for="signup-adresse">Adresse de livraison</label>
                     <input type="text" id="signup-adresse" name="signup-adresse" placeholder="Rue, ville">
                     
-                    <label for=\"signup-naissance\">Date de naissance *</label>
+                    <label for="signup-naissances">Date de naissance *</label>
                     <input type="date" id="signup-naissance" name="signup-naissance" required>
                     
                     <label for="signup-password">Mot de passe * (min. 6 car.)</label>
@@ -157,3 +149,4 @@ include 'includes/header.php';
         loginTab.classList.remove('tab-btn-active');
     });
 </script>
+
