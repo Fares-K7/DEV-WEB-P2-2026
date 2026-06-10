@@ -1,5 +1,4 @@
 <?php
-// carte.php
 require_once 'includes/config.php';
 
 $pageTitle  = 'CY-FAT — Carte';
@@ -9,7 +8,6 @@ $plats   = loadJSON(DATA_PLATS);
 $menus   = loadJSON(DATA_MENUS);
 $user    = currentUser();
 
-// Filtre catégorie
 $filtre    = sanitize($_GET['cat']    ?? 'tout');
 $search    = sanitize($_GET['search'] ?? '');
 
@@ -23,7 +21,6 @@ $categories = [
     'boisson' => 'Boissons',
 ];
 
-// Filtrage PHP
 $plats_filtres = array_filter($plats, function($p) use ($filtre, $search) {
     if ($filtre !== 'tout' && $p['categorie'] !== $filtre) return false;
     if ($search && stripos($p['nom'] . ' ' . $p['description'], $search) === false) return false;
@@ -136,7 +133,6 @@ include 'includes/header.php';
 <?php include 'includes/footer.php'; ?>
 
 <script>
-// Logique globale d'ajout au panier (localStorage)
 document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', function() {
         const id    = parseInt(this.dataset.id);
@@ -156,7 +152,6 @@ document.querySelectorAll('.add-to-cart').forEach(btn => {
         localStorage.setItem('cyfatCart', JSON.stringify(cart));
         updateCartCount();
 
-        // Feedback visuel à l'utilisateur
         this.textContent = '✅ Ajouté !';
         setTimeout(() => this.innerHTML = '🛒 Ajouter' + (type === 'menu' ? ' au panier' : ''), 1200);
     });
