@@ -1,5 +1,4 @@
 <?php
-// historique.php
 require_once 'includes/config.php';
 requireRole('client', 'connexion.php');
 
@@ -7,7 +6,6 @@ $user      = currentUser();
 $commandes = loadJSON(DATA_COMMANDES);
 $plats     = loadJSON(DATA_PLATS);
 
-// Filtrer les commandes du client, les plus récentes en premier
 $mes_commandes = array_filter($commandes, fn($c) => $c['client_id'] === $user['id']);
 usort($mes_commandes, fn($a,$b) => strtotime($b['date_commande']) - strtotime($a['date_commande']));
 
