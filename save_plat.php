@@ -1,8 +1,6 @@
 <?php
-// actions/save_plat.php
 require_once '../includes/config.php';
 
-// Sécurité
 $user = currentUser();
 if (!$user || !in_array($user['role'], ['restaurateur', 'admin'])) {
     header('Location: ../index.php');
@@ -20,7 +18,7 @@ if ($action === 'add') {
         'description' => sanitize($_POST['description']),
         'prix'        => (float)$_POST['prix'],
         'categorie'   => sanitize($_POST['categorie']),
-        'allergenes'  => [], // Optionnel : à améliorer plus tard
+        'allergenes'  => [], 
         'disponible'  => true,
         'image'       => !empty($_POST['image']) ? sanitize($_POST['image']) : 'default.jpg'
     ];
@@ -38,7 +36,6 @@ if ($action === 'add') {
 
 } elseif ($action === 'delete') {
     $plats = array_filter($plats, fn($p) => $p['id'] !== $id);
-    // Ré-indexer le tableau après filtrage
     $plats = array_values($plats);
     setFlash('success', 'Plat supprimé de la carte.');
 }
