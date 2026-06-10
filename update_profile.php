@@ -1,5 +1,4 @@
 <?php
-// actions/update_profile.php
 require_once '../includes/config.php';
 requireRole('client', '../connexion.php');
 
@@ -33,7 +32,6 @@ foreach ($users as &$u) {
         $u['adresse']   = $adresse;
         $u['code_interphone'] = $interphone;
 
-        // Si un nouveau mot de passe est saisi
         if (!empty($new_pwd)) {
             if (strlen($new_pwd) < 6) {
                 setFlash('error', 'Le nouveau mot de passe doit faire au moins 6 caractères.');
