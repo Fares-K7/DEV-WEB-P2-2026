@@ -29,32 +29,33 @@ if (empty($articles)) {
     exit;
 }
 
-// Calculer le total
 $total = 0;
-$plats   = loadJSON(DATA_PLATS);
-$menus   = loadJSON(DATA_MENUS);
+$plats = loadJSON(DATA_PLATS);
+$menus = loadJSON(DATA_MENUS); // On charge bien les menus depuis le JSON
 
 foreach ($articles as &$art) {
     if ($art['type'] === 'plat') {
         foreach ($plats as $p) {
             if ($p['id'] == $art['id']) {
-                $art['prix_unitaire'] = $p['prix'];
-                $art['nom'] = $p['nom'];
-                break;
+                $art['prix'] = $p['prix']; // On attache le prix unitaire
+                $art['nom']  = $p['nom'];
+                $total      += $p['prix'] * $art['quantite'];
             }
         }
-    } elseif ($art['type'] === 'menu') {
+    } 
+    // === AJOUTEZ OU VÉRIFIEZ CE BLOC POUR LES MENUS ===
+    unset($m); // Sécurité PHP
+    if ($art['type'] === 'menu') {
         foreach ($menus as $m) {
             if ($m['id'] == $art['id']) {
-                $art['prix_unitaire'] = $m['prix_total'];
-                $art['nom'] = $m['nom'];
-                break;
+                $art['prix'] = $m['prix']; // On récupère les 10.00 € du menu
+                $art['nom']  = $m['nom'];
+                $total      += $m['prix'] * $art['quantite']; // On l'ajoute au total
             }
         }
     }
-    $total += ($art['prix_unitaire'] ?? 0) * ($art['quantite'] ?? 1);
 }
-unset($art);
+unset($art); // Optionnel mais recommandé après une boucle par référence (&)
 
 // Appliquer remise fidélité
 $remise_pct = $user['remise'] ?? 0;
