@@ -1,5 +1,4 @@
 <?php
-// panier.php
 require_once 'includes/config.php';
 requireRole('client', 'connexion.php');
 
@@ -17,12 +16,10 @@ include 'includes/header.php';
 
     <div class="panier-layout">
 
-        <!-- Panier dynamique (JS) -->
         <div class="panier-items" id="panier-items">
             <p class="cart-empty" id="empty-msg">Votre panier est vide. <a href="carte.php">Voir la carte</a></p>
         </div>
 
-        <!-- Formulaire commande + paiement -->
         <form class="panier-form" id="order-form" action="actions/commander.php" method="POST">
             <input type="hidden" name="articles" id="articles-input">
 
@@ -129,7 +126,6 @@ function renderPanier() {
     if (remise > 0) totalText += ` <small style="color:var(--color-muted);">(avant remise : ${total.toFixed(2).replace('.',',')} €)</small>`;
     totalEl.innerHTML = totalText;
 
-    // Mettre à jour l'input caché
     document.getElementById('articles-input').value = JSON.stringify(
         cart.map(i => ({ id: i.id, type: i.type, quantite: i.quantite }))
     );
@@ -151,18 +147,15 @@ function removeItem(idx) {
     renderPanier();
 }
 
-// Afficher/masquer champs selon mode
 document.getElementById('mode-select').addEventListener('change', function() {
     document.getElementById('livraison-fields').style.display = this.value === 'livraison' ? 'block' : 'none';
     document.getElementById('emporter-fields').style.display  = this.value === 'a_emporter' ? 'block' : 'none';
 });
 
-// Formatage numéro carte
 document.getElementById('card_number').addEventListener('input', function() {
     this.value = this.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim().slice(0,19);
 });
 
-// Vider panier après commande réussie
 document.getElementById('order-form').addEventListener('submit', function() {
     setTimeout(() => localStorage.removeItem('cyfatCart'), 500);
 });
