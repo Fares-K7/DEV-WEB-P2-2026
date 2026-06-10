@@ -1,23 +1,11 @@
-# CY-FAT — Phase 2 — Guide d'installation
-
-## Prérequis
-- PHP 8.1+ avec extension `json`
-- Serveur web (Apache/Nginx) ou `php -S localhost:8000`
-- Aucune base de données requise (fichiers JSON)
-
 ## Installation
 
 1. Copier tous les fichiers dans votre répertoire web (ex: `htdocs/cyfat/`)
-2. S'assurer que PHP a les droits d'écriture sur le dossier `data/` :
-   ```bash
-   chmod 775 data/
-   chmod 664 data/*.json
-   ```
-3. Lancer le serveur :
+2. Lancer le serveur :
    ```bash
    php -S localhost:8000
    ```
-4. Ouvrir `http://localhost:8000/index.php`
+3. Ouvrir `http://localhost:8000/index.php`
 
 ---
 
@@ -50,6 +38,7 @@ cyfat/
 ├── connexion.php            ← Connexion + inscription
 ├── carte.php                ← Carte des plats (filtrée dynamiquement)
 ├── panier.php               ← Panier + formulaire commande + paiement
+├── roulette.php             ← Fonctionnalité innovante 
 ├── suivi_commande.php       ← Suivi temps réel d'une commande
 ├── historique.php           ← Historique commandes client
 ├── profil.php               ← Profil client + fidélité
@@ -72,10 +61,7 @@ cyfat/
 |---------------|------------------------------|-------------|
 | Admin         | admin.cyfat@gmail.com        | Admin2026   |
 | Admin 2       | admin2@cyfat.fr              | password    |
-| Client (Premium) | lucas.martin@etud.cyu.fr | password    |
-| Client (VIP)  | liam.nguyen@gmail.com        | password    |
-| Client        | yasmine.b@gmail.com          | password    |
-| Client bloqué | theo.chev@outlook.com        | password    |
+| Client        | client@gmail.com             | password    |
 | Restaurateur  | chef@cyfat.fr                | password    |
 | Livreur       | livreur@cyfat.fr             | password    |
 
@@ -149,24 +135,4 @@ cyfat/
 
 ---
 
-## Fonctionnalités implémentées (Phase 2)
 
-- ✅ Inscription fonctionnelle (hash bcrypt)
-- ✅ Connexion fonctionnelle avec redirection par rôle
-- ✅ Sessions PHP sécurisées
-- ✅ 9 utilisateurs (2 admins, 5 clients, 1 restaurateur, 1 livreur)
-- ✅ 18 plats, 4 menus en JSON
-- ✅ Carte dynamique avec filtres par catégorie et recherche
-- ✅ Panier localStorage + commande serveur
-- ✅ Paiement CYBank simulé
-- ✅ Historique commandes client
-- ✅ Suivi commande avec timeline
-- ✅ Page profil client avec points fidélité
-- ✅ Page admin : liste utilisateurs, bloquer/activer, modifier niveau/remise
-- ✅ Page restaurateur : tableau Kanban, changement statut, attribution livreur
-- ✅ Page livreur : mobile-first, grands boutons, GPS Maps, marquer livré/abandonné
-- ✅ Notation commandes livrées
-- ✅ Avis publics stockés en JSON côté serveur
-- ✅ Header dynamique selon rôle connecté
-- ✅ Flash messages (succès/erreur)
-- ✅ Auto-refresh restaurateur/livreur toutes les 20-30s
