@@ -1,8 +1,6 @@
 <?php
-// admin_carte.php
 require_once 'includes/config.php';
 
-// Seuls le restaurateur et l'admin ont accès
 $user = currentUser();
 if (!$user || !in_array($user['role'], ['restaurateur', 'admin'])) {
     header('Location: index.php');
