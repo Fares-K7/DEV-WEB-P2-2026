@@ -21,6 +21,45 @@ if (!$commande) {
     exit;
 }
 
+// 🌟 SÉCURITÉ ANTI-BUG 0€ : Si la commande est corrompue dans le JSON, on la répare en direct !
+$plats_backup = loadJSON(DATA_PLATS);
+$menus_backup = loadJSON(DATA_MENUS);
+$total_recalcule = 0;
+
+foreach ($commande['articles'] as $index => $art) {
+    // On essaie de lire toutes les clés de prix possibles ('prix_unitaire' ou 'prix')
+    $prix = floatval($art['prix_unitaire'] ?? $art['prix'] ?? 0);
+    
+    // Si le prix trouvé est égal à 0 ou null, on va chercher sa vraie valeur dans le catalogue d'origine
+    if ($prix <= 0) {
+        if (($art['type'] ?? '') === 'menu') {
+            foreach ($menus_backup as $m) {
+                if ($m['id'] == $art['id']) {
+                    $prix = floatval($m['prix_total'] ?? 0);
+                    break;
+                }
+            }
+        } else {
+            foreach ($plats_backup as $p) {
+                if ($p['id'] == $art['id']) {
+                    $prix = floatval($p['prix'] ?? 0);
+                    break;
+                }
+            }
+        }
+    }
+    
+    // On réinjecte le prix propre corrigé pour l'affichage des lignes
+    $commande['articles'][$index]['prix_unitaire_propre'] = $prix;
+    $total_recalcule += $prix * intval($art['quantite']);
+}
+
+// Si le total global enregistré dans la commande était de 0, on le remplace par notre calcul sécurisé
+$total_final_commande = floatval($commande['total'] ?? 0);
+if ($total_final_commande <= 0) {
+    $total_final_commande = $total_recalcule;
+}
+
 $pageTitle  = 'CY-FAT — Suivi commande #' . $id;
 $activePage = '';
 include 'includes/header.php';
@@ -41,7 +80,6 @@ $currentStep = $statuts[$commande['statut']]['step'] ?? 0;
     <h2>Suivi commande #<?= $commande['id'] ?></h2>
     <p class="section-intro">Passée le <?= date('d/m/Y à H:i', strtotime($commande['date_commande'])) ?></p>
 
-    <!-- Timeline statut -->
     <div class="statut-timeline">
         <?php foreach ($statuts as $key => $s): if ($s['step'] === 0) continue; ?>
         <div class="statut-step <?= $currentStep >= $s['step'] ? 'statut-done' : '' ?> <?= $commande['statut'] === $key ? 'statut-current' : '' ?>">
@@ -52,14 +90,13 @@ $currentStep = $statuts[$commande['statut']]['step'] ?? 0;
     </div>
 
     <div class="suivi-grid">
-        <!-- Détail articles -->
         <div class="suivi-card">
             <h3>Articles commandés</h3>
             <ul class="suivi-articles">
                 <?php foreach ($commande['articles'] as $art): ?>
                 <li>
                     <span><?= h($art['nom']) ?> × <?= $art['quantite'] ?></span>
-                    <span class="price"><?= number_format($art['prix_unitaire'] * $art['quantite'], 2, ',', '') ?> €</span>
+                    <span class="price"><?= number_format($art['prix_unitaire_propre'] * $art['quantite'], 2, ',', '') ?> €</span>
                 </li>
                 <?php endforeach; ?>
             </ul>
@@ -70,11 +107,10 @@ $currentStep = $statuts[$commande['statut']]['step'] ?? 0;
             <?php endif; ?>
             <div style="display:flex;justify-content:space-between;font-weight:700;margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,.07);">
                 <span>Total payé</span>
-                <span class="price"><?= number_format($commande['total'], 2, ',', '') ?> €</span>
+                <span class="price"><?= number_format($total_final_commande, 2, ',', '') ?> €</span>
             </div>
         </div>
 
-        <!-- Infos livraison -->
         <div class="suivi-card">
             <h3>Informations</h3>
             <p><strong>Mode :</strong> <?= h(ucfirst(str_replace('_', ' ', $commande['mode']))) ?></p>
@@ -94,7 +130,6 @@ $currentStep = $statuts[$commande['statut']]['step'] ?? 0;
                 <?php endif; ?>
             </p>
 
-            <!-- Bouton noter si livré sans note -->
             <?php if ($commande['statut'] === 'livre' && !$commande['note_commande']): ?>
             <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,0,0,.07);">
                 <h4>Noter cette commande</h4>
