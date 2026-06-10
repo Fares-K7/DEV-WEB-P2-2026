@@ -1,17 +1,14 @@
 <?php
-// avis.php
 require_once 'includes/config.php';
 $pageTitle  = 'CY-FAT — Avis';
 $activePage = 'avis.php';
 
-// Traitement soumission
 $msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom  = sanitize($_POST['r-name'] ?? '');
     $note = (int)($_POST['r-rating'] ?? 5);
     $text = sanitize($_POST['r-text'] ?? '');
     if ($text && $note >= 1 && $note <= 5) {
-        // On stocke dans un fichier dédié aux avis publics
         $avisFile = DATA_DIR . 'avis.json';
         $avis = file_exists($avisFile) ? loadJSON($avisFile) : [];
         $avis[] = [
@@ -27,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $avisFile = DATA_DIR . 'avis.json';
 $avis_publics = file_exists($avisFile) ? loadJSON($avisFile) : [];
-// Plus récents en premier
 $avis_publics = array_reverse($avis_publics);
 
 include 'includes/header.php';
