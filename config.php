@@ -1,21 +1,15 @@
 <?php
-// ========================================================
-// includes/config.php — Configuration & fonctions globales
-// ========================================================
 
-// Démarrage de session sécurisé
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Chemins vers les fichiers de données
 define('DATA_DIR', __DIR__ . '/../data/');
 define('DATA_USERS',     DATA_DIR . 'users.json');
 define('DATA_PLATS',     DATA_DIR . 'plats.json');
 define('DATA_MENUS',     DATA_DIR . 'menus.json');
 define('DATA_COMMANDES', DATA_DIR . 'commandes.json');
 
-// ---- Helpers JSON ----
 
 function loadJSON(string $path): array {
     if (!file_exists($path)) return [];
@@ -27,7 +21,6 @@ function saveJSON(string $path, array $data): bool {
     return file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
 }
 
-// ---- Auth ----
 
 function isLoggedIn(): bool {
     return isset($_SESSION['user_id']);
@@ -63,24 +56,21 @@ function hasRole(string $role): bool {
     return $user && $user['role'] === $role;
 }
 
-// ---- Sécurité ----
 
 function h(string $str): string {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
 function sanitize(string $str): string {
-    return trim(strip_tags($str));
+    return htmlspecialchars(trim($str), ENT_QUOTES, 'UTF-8');
 }
 
-// ---- Génération ID ----
 
 function nextId(array $items): int {
     if (empty($items)) return 1;
     return max(array_column($items, 'id')) + 1;
 }
 
-// ---- Flash messages ----
 
 function setFlash(string $type, string $msg): void {
     $_SESSION['flash'] = ['type' => $type, 'msg' => $msg];
@@ -101,3 +91,4 @@ function renderFlash(): string {
     $cls = $flash['type'] === 'success' ? 'flash-success' : 'flash-error';
     return '<div class="' . $cls . '">' . h($flash['msg']) . '</div>';
 }
+
