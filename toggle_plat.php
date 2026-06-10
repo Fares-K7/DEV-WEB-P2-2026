@@ -1,5 +1,4 @@
 <?php
-// actions/toggle_plat.php
 require_once '../includes/config.php';
 
 $user = currentUser();
@@ -19,7 +18,6 @@ $updated = false;
 
 foreach ($plats as &$p) {
     if ($p['id'] === $plat_id) {
-        // On inverse l'état de disponibilité boolean
         $p['disponible'] = !$p['disponible'];
         $updated = true;
         break;
