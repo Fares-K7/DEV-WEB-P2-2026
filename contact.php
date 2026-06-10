@@ -1,5 +1,4 @@
 <?php
-// contact.php
 require_once 'includes/config.php';
 $pageTitle  = 'CY-FAT — Contact';
 $activePage = 'contact.php';
