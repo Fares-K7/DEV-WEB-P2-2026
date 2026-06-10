@@ -1,18 +1,14 @@
 <?php
-// roulette.php
 require_once 'includes/config.php';
 
-// 1. Chargement des menus depuis le fichier JSON
 $menus_roulette = file_exists(DATA_MENUS) ? loadJSON(DATA_MENUS) : [];
 $items_roulette = [];
 
 foreach ($menus_roulette as $m) {
-    // Si le menu n'est pas disponible, on l'ignore
     if (($m['disponible'] ?? true) === false) {
         continue;
     }
 
-    // 🌟 CORRECTION : On utilise la clé exacte de ton JSON "prix_total"
     $prix_final = isset($m['prix_total']) ? floatval($m['prix_total']) : 0.00;
 
     $items_roulette[] = [
@@ -60,7 +56,6 @@ include 'includes/header.php';
 </main>
 
 <script>
-// Transfert du catalogue de menus PHP vers JavaScript
 const DATAS_ROULETTE = <?php echo json_encode($items_roulette); ?>;
 
 document.getElementById('btn-roulette').addEventListener('click', function() {
@@ -68,10 +63,8 @@ document.getElementById('btn-roulette').addEventListener('click', function() {
     const resultDiv = document.getElementById('roulette-result');
     const btn = this;
     
-    // Filtrage pour ne garder que les menus inférieurs ou égaux au budget
     const optionsValides = DATAS_ROULETTE.filter(item => item.prix <= budgetMax);
     
-    // Si aucun menu ne rentre dans le budget
     if (optionsValides.length === 0) {
         resultDiv.innerHTML = `
             <div style="animation: popIn 0.3s ease; background: #fdecea; color: #c03030; padding: 15px; border-radius: 8px; width: 100%; border-left: 5px solid #c03030; font-weight: bold; text-align: center;">
@@ -82,7 +75,6 @@ document.getElementById('btn-roulette').addEventListener('click', function() {
         return;
     }
 
-    // Effet visuel de défilement (Faux suspense)
     btn.disabled = true;
     let compteur = 0;
     const interval = setInterval(() => {
@@ -93,10 +85,8 @@ document.getElementById('btn-roulette').addEventListener('click', function() {
         if (compteur > 20) { 
             clearInterval(interval);
             
-            // Sélection finale parmi les menus filtrés
             const gagnant = optionsValides[Math.floor(Math.random() * optionsValides.length)];
             
-            // Affichage propre du menu gagnant
             resultDiv.innerHTML = `
                 <div style="animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: #fff5eb; padding: 20px; border-radius: 10px; width: 100%; border: 2px solid var(--color-secondary); box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
                     <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-primary); font-weight: bold; display: block; margin-bottom: 5px;">
