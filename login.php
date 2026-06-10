@@ -1,5 +1,4 @@
 <?php
-// actions/login.php — Traitement connexion
 require_once '../includes/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -32,12 +31,8 @@ if (!$found) {
     exit;
 }
 
-// Vérifier mot de passe
-// Note : les mots de passe de démo sont hachés avec password_hash('password', PASSWORD_DEFAULT)
-// Pour les tests : tous les comptes ont le mot de passe "password"
-// Le compte admin a aussi Admin2026 (vérifié en clair pour compatibilité phase 1)
+
 $passwordOk = password_verify($password, $found['password']);
-// Compatibilité : ancien admin hard-codé
 if (!$passwordOk && $found['email'] === 'admin.cyfat@gmail.com' && $password === 'Admin2026') {
     $passwordOk = true;
 }
@@ -54,7 +49,6 @@ if ($found['statut'] === 'bloque') {
     exit;
 }
 
-// Mise à jour dernière connexion
 $users = array_map(function($u) use ($found) {
     if ($u['id'] === $found['id']) {
         $u['derniere_connexion'] = date('Y-m-d');
@@ -63,12 +57,10 @@ $users = array_map(function($u) use ($found) {
 }, $users);
 saveJSON(DATA_USERS, $users);
 
-// Créer la session
 $_SESSION['user_id'] = $found['id'];
 
 setFlash('success', 'Connexion réussie ! Bienvenue ' . $found['prenom'] . ' !');
 
-// Redirection selon rôle
 switch ($found['role']) {
     case 'admin':        header('Location: ../admin_users.php'); break;
     case 'restaurateur': header('Location: ../restaurateur.php'); break;
