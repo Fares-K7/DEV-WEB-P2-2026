@@ -1,5 +1,4 @@
 <?php
-// restaurateur.php
 require_once 'includes/config.php';
 requireLogin('connexion.php');
 
@@ -12,13 +11,10 @@ if (!in_array($user['role'], ['restaurateur', 'admin'])) {
 $commandes = loadJSON(DATA_COMMANDES);
 $users     = loadJSON(DATA_USERS);
 
-// Livreurs disponibles
 $livreurs = array_filter($users, fn($u) => $u['role'] === 'livreur' && $u['statut'] === 'actif');
 
-// Trier les commandes par date décroissante
 usort($commandes, fn($a,$b) => strtotime($b['date_commande']) - strtotime($a['date_commande']));
 
-// Grouper par statut
 $groups = [
     'en_attente'     => ['title' => '📥 En attente',    'color' => '#3a8fc0', 'cmds' => []],
     'en_preparation' => ['title' => '👨‍🍳 En préparation', 'color' => '#c06010', 'cmds' => []],
@@ -33,7 +29,6 @@ foreach ($commandes as $cmd) {
     }
 }
 
-// Helper: trouver un user par id
 function getUserById(array $users, int $id): ?array {
     foreach ($users as $u) if ($u['id'] === $id) return $u;
     return null;
@@ -54,7 +49,6 @@ include 'includes/header.php';
     </div>
     <p class="section-intro">Vue restaurateur — Toutes les commandes en temps réel.</p>
 
-    <!-- Résumé rapide -->
     <div class="resto-stats">
         <?php foreach ($groups as $key => $g): if ($key === 'livre') continue; ?>
         <div class="resto-stat-card" style="border-top:3px solid <?= $g['color'] ?>;">
@@ -64,7 +58,6 @@ include 'includes/header.php';
         <?php endforeach; ?>
     </div>
 
-    <!-- Colonnes Kanban -->
     <div class="kanban-board">
         <?php foreach ($groups as $statut => $group): ?>
         <div class="kanban-col">
@@ -100,7 +93,6 @@ include 'includes/header.php';
                     <?php endif; ?>
                 </div>
 
-                <!-- Boutons d'action selon statut -->
                 <div class="kanban-actions">
                     <?php if ($statut === 'en_attente'): ?>
                     <form action="actions/update_commande.php" method="POST">
