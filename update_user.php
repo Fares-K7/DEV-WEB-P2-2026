@@ -1,6 +1,8 @@
 <?php
 // actions/update_user.php — Modifier un utilisateur (admin)
 require_once '../includes/config.php';
+
+// Sécurité : Seul l'administrateur a le droit d'être ici
 requireRole('admin', '../index.php');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -23,45 +25,56 @@ $updated = false;
 
 foreach ($users as &$u) {
     if ($u['id'] === $target_id) {
+        
+        // Sécurité : Empêcher l'admin connecté de modifier ou bloquer son propre compte
+        if ($u['id'] === currentUser()['id']) {
+            setFlash('error', 'Vous ne pouvez pas modifier vos propres droits d\'administrateur.');
+            header('Location: ../admin_users.php');
+            exit;
+        }
+
         switch ($action) {
-            case 'bloquer':
-                $u['statut'] = 'bloque';
+            // Gère le bouton d'activation/bannissement
+            case 'toggle_status':
+                $u['statut'] = ($u['statut'] === 'actif') ? 'bloque' : 'actif';
                 $updated = true;
                 break;
-            case 'activer':
-                $u['statut'] = 'actif';
-                $updated = true;
-                break;
-            case 'set_niveau':
-                if (in_array($value, ['Standard', 'Premium', 'VIP'])) {
-                    $u['niveau'] = $value;
-                    $updated = true;
-                }
-                break;
-            case 'set_remise':
-                $remise = (int)$value;
-                if ($remise >= 0 && $remise <= 50) {
-                    $u['remise'] = $remise;
-                    $updated = true;
-                }
-                break;
+
+            // Gère le changement de rôle (Régulier, Restaurateur, Livreur, Admin)
             case 'set_role':
                 if (in_array($value, ['client', 'admin', 'restaurateur', 'livreur'])) {
                     $u['role'] = $value;
                     $updated = true;
                 }
                 break;
+
+            // Gère le niveau de fidélité (Standard, Premium, VIP)
+            case 'set_niveau':
+                if (in_array($value, ['Standard', 'Premium', 'VIP'])) {
+                    $u['niveau'] = $value;
+                    $updated = true;
+                }
+                break;
+
+            // Gère l'attribution d'un pourcentage de remise manuel
+            case 'set_remise':
+                $remise = (int)$value;
+                if ($remise >= 0 && $remise <= 100) {
+                    $u['remise'] = $remise;
+                    $updated = true;
+                }
+                break;
         }
-        break;
+        break; // Sortie de la boucle une fois l'utilisateur trouvé
     }
 }
 unset($u);
 
 if ($updated) {
     saveJSON(DATA_USERS, $users);
-    setFlash('success', 'Utilisateur mis à jour.');
+    setFlash('success', 'Utilisateur mis à jour avec succès.');
 } else {
-    setFlash('error', 'Action invalide ou utilisateur introuvable.');
+    setFlash('error', 'Impossible de mettre à jour l\'utilisateur ou aucune modification détectée.');
 }
 
 header('Location: ../admin_users.php');
