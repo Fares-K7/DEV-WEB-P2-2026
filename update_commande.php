@@ -1,5 +1,4 @@
 <?php
-// actions/update_commande.php — Changer le statut d'une commande
 require_once '../includes/config.php';
 requireLogin('../connexion.php');
 
@@ -31,7 +30,6 @@ $updated = false;
 
 foreach ($commandes as &$cmd) {
     if ($cmd['id'] === $commande_id) {
-        // Vérifications de rôle
         if ($user['role'] === 'livreur' && $cmd['livreur_id'] !== $user['id']) {
             setFlash('error', 'Cette commande ne vous est pas attribuée.');
             header('Location: ../livreur.php');
@@ -61,7 +59,6 @@ if ($updated) {
     setFlash('error', 'Commande introuvable.');
 }
 
-// Redirection selon rôle
 if ($user['role'] === 'livreur') {
     header('Location: ../livreur.php');
 } elseif ($user['role'] === 'restaurateur') {
