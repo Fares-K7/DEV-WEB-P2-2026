@@ -1,8 +1,6 @@
 <?php
-// actions/update_user.php — Modifier un utilisateur (admin)
 require_once '../includes/config.php';
 
-// Sécurité : Seul l'administrateur a le droit d'être ici
 requireRole('admin', '../index.php');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -26,7 +24,6 @@ $updated = false;
 foreach ($users as &$u) {
     if ($u['id'] === $target_id) {
         
-        // Sécurité : Empêcher l'admin connecté de modifier ou bloquer son propre compte
         if ($u['id'] === currentUser()['id']) {
             setFlash('error', 'Vous ne pouvez pas modifier vos propres droits d\'administrateur.');
             header('Location: ../admin_users.php');
@@ -34,13 +31,11 @@ foreach ($users as &$u) {
         }
 
         switch ($action) {
-            // Gère le bouton d'activation/bannissement
             case 'toggle_status':
                 $u['statut'] = ($u['statut'] === 'actif') ? 'bloque' : 'actif';
                 $updated = true;
                 break;
 
-            // Gère le changement de rôle (Régulier, Restaurateur, Livreur, Admin)
             case 'set_role':
                 if (in_array($value, ['client', 'admin', 'restaurateur', 'livreur'])) {
                     $u['role'] = $value;
@@ -48,7 +43,6 @@ foreach ($users as &$u) {
                 }
                 break;
 
-            // Gère le niveau de fidélité (Standard, Premium, VIP)
             case 'set_niveau':
                 if (in_array($value, ['Standard', 'Premium', 'VIP'])) {
                     $u['niveau'] = $value;
@@ -56,7 +50,6 @@ foreach ($users as &$u) {
                 }
                 break;
 
-            // Gère l'attribution d'un pourcentage de remise manuel
             case 'set_remise':
                 $remise = (int)$value;
                 if ($remise >= 0 && $remise <= 100) {
@@ -65,7 +58,7 @@ foreach ($users as &$u) {
                 }
                 break;
         }
-        break; // Sortie de la boucle une fois l'utilisateur trouvé
+        break; 
     }
 }
 unset($u);
