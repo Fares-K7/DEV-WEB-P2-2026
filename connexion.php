@@ -1,8 +1,6 @@
 <?php
-// connexion.php
 require_once 'includes/config.php';
 
-// Déjà connecté → rediriger
 if (isLoggedIn()) {
     $user = currentUser();
     switch ($user['role']) {
@@ -25,14 +23,12 @@ include 'includes/header.php';
 
         <div class="connexion-layout">
 
-            <!-- Formulaires -->
             <div class="connexion-form-card">
                 <div class="login-tabs">
                     <button class="tab-btn tab-btn-active" id="tab-login">Connexion</button>
                     <button class="tab-btn" id="tab-signup">Inscription</button>
                 </div>
 
-                <!-- Connexion -->
                 <form class="login-form" id="login-form" action="actions/login.php" method="POST">
                     <h3>Connexion</h3>
                     <label for="login-email">Adresse email *</label>
@@ -45,7 +41,6 @@ include 'includes/header.php';
 
                 </form>
 
-                <!-- Inscription -->
                 <form class="signup-form" id="signup-form" action="actions/register.php" method="POST" style="display:none;">
                     <h3>Créer un compte</h3>
 
@@ -82,7 +77,6 @@ include 'includes/header.php';
                 </form>
             </div>
 
-            <!-- Rôles -->
             <div class="connexion-roles-card">
                 <h3>Rôles et droits</h3>
 
