@@ -1,5 +1,4 @@
 <?php
-// actions/admin_create_user.php
 require_once '../includes/config.php';
 requireRole('admin', '../index.php');
 
@@ -34,7 +33,6 @@ if (strlen($password) < 6) {
 
 $users = loadJSON(DATA_USERS);
 
-// Vérifier si l'adresse email existe déjà
 foreach ($users as $u) {
     if (strtolower($u['email']) === strtolower($email)) {
         setFlash('error', 'Cet email est déjà associé à un compte.');
@@ -43,7 +41,6 @@ foreach ($users as $u) {
     }
 }
 
-// Structure par défaut d'un utilisateur
 $newUser = [
     'id'                 => nextId($users),
     'nom'                => $nom,
